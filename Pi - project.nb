@@ -1,0 +1,1331 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     51578,       1323]
+NotebookOptionsPosition[     45126,       1212]
+NotebookOutlinePosition[     45469,       1227]
+CellTagsIndexPosition[     45426,       1224]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\[Pi]  Project Report", "Title",
+ CellChangeTimes->{{3.789739854693279*^9, 3.7897398627117844`*^9}, {
+  3.7903026665709286`*^9, 3.790302668362726*^9}, {3.8230051337799153`*^9, 
+  3.823005146666404*^9}},ExpressionUUID->"6e8a072c-1c3f-4d1e-994e-\
+1e142659154f"],
+
+Cell[TextData[{
+ "Math 242 \[LongDash] Modern Computational Mathematics\nDone by: ",
+ StyleBox["Dagmawe Haileslassie",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.7897411490633097`*^9, 3.789741154447769*^9}, {
+  3.790302673542274*^9, 3.7903026765723457`*^9}, {3.822149029512994*^9, 
+  3.8221490433129797`*^9}, {3.8230051527705593`*^9, 
+  3.8230051663044796`*^9}},ExpressionUUID->"33f14418-89ec-4f5a-abf1-\
+f6994c494be3"],
+
+Cell[CellGroupData[{
+
+Cell["Problem Statement - 1", "Section",
+ CellChangeTimes->{{3.7897411618844433`*^9, 3.7897411663074617`*^9}, {
+  3.82300594242085*^9, 
+  3.823005943351658*^9}},ExpressionUUID->"234d9101-b593-46e4-8524-\
+80ef46f8383b"],
+
+Cell[TextData[{
+ "I will use the following sum formula to compute approximation of \[Pi]:\n\t\
+1/\[Pi] = (2*Sqrt[2]/9801) * SUM[ ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"4", " ", "k"}], ")"}], "!"}], " ", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1103", " ", "+", " ", 
+       RowBox[{"26390", " ", "k"}]}], ")"}], "/", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"k", "!"}], ")"}], "^", "4"}]}], "*", 
+    SuperscriptBox["396", 
+     RowBox[{"4", "k"}]]}], TraditionalForm]],ExpressionUUID->
+  "1d31aae2-99d1-4f6c-aa23-8c0b89a90d8a"],
+ "] "
+}], "Text",
+ CellChangeTimes->{{3.789739908991789*^9, 3.7897399596738243`*^9}, {
+  3.7897413011810894`*^9, 3.7897413346305885`*^9}, {3.789741374832241*^9, 
+  3.78974137649296*^9}, {3.8230051992962403`*^9, 3.82300520745335*^9}, {
+  3.8230052699824247`*^9, 3.823005337915474*^9}, {3.8230054458332567`*^9, 
+  3.8230054731930156`*^9}, {3.8231932656799374`*^9, 
+  3.823193299622653*^9}},ExpressionUUID->"48ceb5d0-1fc3-4516-b4ba-\
+b9eb004531dd"],
+
+Cell["\<\
+This formula is known as the Ramanujan formula for \[Pi]. I will investigate \
+how the number of correct digits in the approximation of \[Pi] depends on the \
+number of terms used in the sum. \
+\>", "Text",
+ CellChangeTimes->{{3.789739908991789*^9, 3.7897399596738243`*^9}, {
+  3.7897413011810894`*^9, 3.789741311130176*^9}, {3.7897414013208632`*^9, 
+  3.789741406967065*^9}, {3.789741456586488*^9, 3.7897414924080315`*^9}, {
+  3.822149074971471*^9, 3.8221490752677417`*^9}, {3.8230053789308677`*^9, 
+  3.823005431272994*^9}},ExpressionUUID->"e6aa05fb-5afc-4181-aab3-\
+1108d623fffb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation - Ramanujan", "Section",
+ CellChangeTimes->{{3.789741203883596*^9, 3.7897412138794947`*^9}, {
+  3.823007151983136*^9, 
+  3.823007182444113*^9}},ExpressionUUID->"4ffbd559-bf3d-4ed6-bcfd-\
+f495c6ecb407"],
+
+Cell["\<\
+First, I will use a do loop with a print statement instead of a module to \
+visualize what exactly is going on in my code. This helps me understand the \
+sequence, and point out any problems early. \
+\>", "Text",
+ CellChangeTimes->{{3.823180238428994*^9, 
+  3.8231803657723417`*^9}},ExpressionUUID->"1cc60df2-bfac-4837-b433-\
+8c88cdb2934b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Do", "[", 
+  RowBox[{
+   RowBox[{"Print", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"4", "i"}], ")"}], "!"}], ")"}], "*", 
+       RowBox[{"(", 
+        RowBox[{"1103", "+", 
+         RowBox[{"26390", "i"}]}], ")"}]}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"i", "!"}], ")"}], "4"], "*", 
+       SuperscriptBox["396", 
+        RowBox[{"4", "i"}]]}], ")"}]}], "]"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "0", ",", "5"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.823180381094343*^9, 3.82318039485485*^9}, 
+   3.823181746091691*^9, {3.8231898382306557`*^9, 3.8231898406958017`*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"0177fcd3-14fc-4588-9a12-39b71fae961d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["1103"], "Print",
+ CellChangeTimes->{3.823181747246153*^9, 3.8231898435710216`*^9, 
+  3.823190572719086*^9, 3.823190723409438*^9},
+ CellLabel->
+  "During evaluation of \
+In[4]:=",ExpressionUUID->"194e4b5f-c4e1-460d-8ac7-3f714dcec23b"],
+
+Cell[BoxData[
+ FractionBox["27493", "1024635744"]], "Print",
+ CellChangeTimes->{3.823181747246153*^9, 3.8231898435710216`*^9, 
+  3.823190572719086*^9, 3.823190723421421*^9},
+ CellLabel->
+  "During evaluation of \
+In[4]:=",ExpressionUUID->"1d606de7-71dd-4e1c-9a22-808699550cfe"],
+
+Cell[BoxData[
+ FractionBox["209545", "933225251451052032"]], "Print",
+ CellChangeTimes->{3.823181747246153*^9, 3.8231898435710216`*^9, 
+  3.823190572719086*^9, 3.8231907234294453`*^9},
+ CellLabel->
+  "During evaluation of \
+In[4]:=",ExpressionUUID->"cede35f7-d2c7-4f4b-a848-7ff2bd146bdd"],
+
+Cell[BoxData[
+ FractionBox["14047775", "7041226539731908913606688768"]], "Print",
+ CellChangeTimes->{3.823181747246153*^9, 3.8231898435710216`*^9, 
+  3.823190572719086*^9, 3.823190723433405*^9},
+ CellLabel->
+  "During evaluation of \
+In[4]:=",ExpressionUUID->"94d261db-a5b0-4ccb-9dde-963979da5969"],
+
+Cell[BoxData[
+ FractionBox["8493041375", 
+  "461740313229488003214951761227271897088"]], "Print",
+ CellChangeTimes->{3.823181747246153*^9, 3.8231898435710216`*^9, 
+  3.823190572719086*^9, 3.8231907234413996`*^9},
+ CellLabel->
+  "During evaluation of \
+In[4]:=",ExpressionUUID->"459a2165-870f-49ca-8d2d-33c495c3da96"],
+
+Cell[BoxData[
+ FractionBox["9125262601", 
+  "52568403264521053657025165532135121484783812608"]], "Print",
+ CellChangeTimes->{3.823181747246153*^9, 3.8231898435710216`*^9, 
+  3.823190572719086*^9, 3.8231907234466496`*^9},
+ CellLabel->
+  "During evaluation of \
+In[4]:=",ExpressionUUID->"c21dd5c1-1266-492a-ab35-5cf0b1aceb7f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["\<\
+Now let\[CloseCurlyQuote]s put the formula above into a module, to avoid \
+repeatedly entering a number as a range in a normal Do loop. \
+\>", "Text",
+ CellChangeTimes->{{3.823180470876528*^9, 
+  3.8231805766486683`*^9}},ExpressionUUID->"1ed3781b-3c6d-46f5-963c-\
+5dccbc4fe2af"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ramanujan", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"sum", " ", "=", " ", "0"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{"sum", " ", "+=", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"4", "i"}], ")"}], "!"}], ")"}], "*", 
+           RowBox[{"(", 
+            RowBox[{"1103", "+", 
+             RowBox[{"26390", "i"}]}], ")"}]}], ")"}], "/", 
+         RowBox[{"(", 
+          RowBox[{
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{"i", "!"}], ")"}], "4"], "*", 
+           SuperscriptBox["396", 
+            RowBox[{"4", "i"}]]}], ")"}]}]}], "\[IndentingNewLine]", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", "n"}], "}"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"sum", "*", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"2", "*", 
+          RowBox[{"Sqrt", "[", "2", "]"}]}], ")"}], "/", "9801"}], 
+       ")"}]}]}]}], " ", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Multiplying", " ", "the", " ", "sum", " ", "with", " ", "the", " ", 
+     "constant"}], " ", "*)"}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.82214921118267*^9, 3.822149226385914*^9}, {
+   3.82300550310911*^9, 3.823005537994384*^9}, {3.823005573974187*^9, 
+   3.8230056560845685`*^9}, {3.8230056866597514`*^9, 3.8230057394852285`*^9}, 
+   3.8230058130495615`*^9, {3.823005845729932*^9, 3.8230058536753254`*^9}, {
+   3.8230058885607524`*^9, 3.823005890098708*^9}, {3.8230059221638927`*^9, 
+   3.8230059226951833`*^9}, {3.8231805835580587`*^9, 3.823180645744218*^9}, 
+   3.823190590899687*^9, 3.8231907456263065`*^9},
+ CellLabel->"In[6]:=",ExpressionUUID->"6cc85909-bfee-46b3-82d2-2189449c6569"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"N", "[", 
+   RowBox[{"1", "/", 
+    RowBox[{"ramanujan", "[", "1", "]"}]}], "]"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Let", "'"}], "s", " ", "check", " ", "to", " ", "see", " ", "if",
+     " ", "it", " ", "works"}], "*)"}]}]], "Input",
+ CellChangeTimes->{{3.823005751796794*^9, 3.8230057629102573`*^9}, {
+  3.8230058936659517`*^9, 3.823005897508808*^9}, {3.8231806512920647`*^9, 
+  3.8231806622596335`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"3cbbfe2b-f459-4fa1-9163-00601b737208"],
+
+Cell[BoxData["3.141592653589794`"], "Output",
+ CellChangeTimes->{
+  3.8230057645437746`*^9, 3.823005823507599*^9, {3.8230058737525654`*^9, 
+   3.82300589795621*^9}, 3.8230059318669667`*^9, 3.8231213257235966`*^9, {
+   3.8231905566940627`*^9, 3.823190605686335*^9}, {3.8231907157127743`*^9, 
+   3.8231907261546707`*^9}, 3.823190776298411*^9},
+ CellLabel->"Out[7]=",ExpressionUUID->"2f7bbc81-cd34-411b-8805-c851fb47344a"]
+}, Open  ]],
+
+Cell["\<\
+Now to calculate the number of correct digits past the decimal point, we will \
+use the correctDigits module written below. This module helps us analyze how \
+accurate the Ramanujan formula really is. \
+\>", "Text",
+ CellChangeTimes->{{3.823180681056615*^9, 3.82318080589367*^9}, {
+  3.8231808511180305`*^9, 
+  3.8231808572449255`*^9}},ExpressionUUID->"75a6be47-db57-4005-b827-\
+5858173dfd75"],
+
+Cell[BoxData[" "], "Input",
+ CellChangeTimes->{
+  3.823181104333905*^9},ExpressionUUID->"2cd3cc60-71f6-4c36-aa9f-\
+f6cef90dbd0a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"correctDigits1", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"approx", ",", 
+      RowBox[{"i", "=", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"approx", "=", " ", 
+      RowBox[{"1", "/", 
+       RowBox[{"ramanujan", "[", "n", "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"RealDigits", "[", 
+          RowBox[{"approx", ",", "10", ",", "1", ",", "i"}], "]"}], 
+         "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "\[Equal]", 
+        RowBox[{
+         RowBox[{"RealDigits", "[", 
+          RowBox[{"Pi", ",", "10", ",", "1", ",", "i"}], "]"}], 
+         "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+       RowBox[{"i", "--"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"-", "i"}], "-", "1"}]}]}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "the", " ", "number", " ", "of", " ", "correct", " ", "digits", " ", 
+     "after", " ", "the", " ", "decimal", " ", "point"}], " ", "*)"}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.82214921118267*^9, 3.822149226385914*^9}, 
+   3.8231212723524485`*^9, {3.8231213724559407`*^9, 3.823121373075301*^9}, 
+   3.8231216347695866`*^9},
+ CellLabel->"In[8]:=",ExpressionUUID->"612286f1-68bf-4495-91c7-86e61fa129cc"],
+
+Cell["\<\
+Now that we can calculate and compare how similar the actual number Pi is to \
+the result of the Ramanujan formula. Let us plot the number of correct digits \
+for various values of n. First we need all the data to create the plot \
+therefore we should start with a table function. When writing a table \
+function we need to specify how many values our variable n will take. I set n \
+to range from 100 up to 1000, with a 100 digit increment. \
+\>", "Text",
+ CellChangeTimes->{{3.823189883889352*^9, 3.823189964463458*^9}, {
+  3.8231900377102532`*^9, 3.823190118874507*^9}, {3.8231901791047773`*^9, 
+  3.823190238059194*^9}, {3.8231903344144273`*^9, 3.823190336055257*^9}, {
+  3.8231927463362665`*^9, 
+  3.823192746953591*^9}},ExpressionUUID->"a0f8d287-6764-4500-a636-\
+2762c2abba14"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"nDigits", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"n", ",", 
+      RowBox[{"correctDigits1", "[", "n", "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "100", ",", "1000", ",", "100"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7902933923045864`*^9, 3.7902934326636353`*^9}, {
+   3.790293481073962*^9, 3.790293500109172*^9}, {3.7902936433229523`*^9, 
+   3.7902937280751543`*^9}, {3.8221494954771004`*^9, 3.822149509287574*^9}, {
+   3.82312142435776*^9, 3.8231214247377768`*^9}, 3.823121638271614*^9, 
+   3.8231909150414762`*^9, 3.82319131648194*^9},
+ CellLabel->"In[11]:=",ExpressionUUID->"c5e9d56f-9bba-4fa6-9f1a-7853caae9359"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"100", ",", "805"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"200", ",", "1604"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"300", ",", "2402"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"400", ",", "3201"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"500", ",", "3999"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"600", ",", "4797"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"700", ",", "5596"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"800", ",", "6394"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"900", ",", "7191"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1000", ",", "7990"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.8231214832575397`*^9, 3.8231217083715553`*^9, {3.8231905397848644`*^9, 
+   3.823190547594262*^9}, 3.8231906963211155`*^9, 3.82319091447933*^9, 
+   3.8231910547647643`*^9, 3.82319145418789*^9},
+ CellLabel->"Out[11]=",ExpressionUUID->"d001b1eb-6197-43f7-997c-355fd5755b8b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"nDigits", ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<terms in sum\>\"", ",", "\"\<correct digits\>\""}], "}"}]}],
+    ",", " ", 
+   RowBox[{
+   "PlotLabel", "\[Rule]", " ", 
+    "\"\<Correct digits of PI produced for the Ramanujan formula\>\""}]}], 
+  "  ", "]"}]], "Input",
+ CellChangeTimes->{{3.7902935115526085`*^9, 3.7902935195900593`*^9}, {
+  3.790293787201981*^9, 3.790293787803336*^9}, {3.7902938421254716`*^9, 
+  3.790293860616047*^9}, {3.8231903541145706`*^9, 3.8231903721629796`*^9}, {
+  3.8231904099348993`*^9, 3.823190453035372*^9}, {3.823190490238774*^9, 
+  3.823190525770278*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"d59b93b8-0c9f-44ba-8e0a-5f71bfbc40a4"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`],
+      AbsoluteThickness[1.6], 
+     PointBox[{{100., 805.}, {200., 1604.}, {300., 2402.}, {400., 3201.}, {
+      500., 3999.}, {600., 4797.}, {700., 5596.}, {800., 6394.}, {900., 
+      7191.}, {1000., 7990.}}]}, {
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      0.012833333333333334`], AbsoluteThickness[1.6]}, {}}, {
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      0.012833333333333334`], AbsoluteThickness[1.6]}, {}}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\"terms in sum\"", TraditionalForm], 
+    FormBox["\"correct digits\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotLabel->FormBox[
+   "\"Correct digits of PI produced for the Ramanujan formula\"", 
+    TraditionalForm],
+  PlotRange->{{0, 1000.}, {0, 7990.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.8231214992955613`*^9, 3.8231905346010666`*^9, 
+  3.823191859993183*^9},
+ CellLabel->"Out[12]=",ExpressionUUID->"d1d360fa-e8c7-4a69-853d-3091d98adfd2"]
+}, Open  ]],
+
+Cell["\<\
+We see the number of digits increases in a linear form which helps us assume \
+that the even if we collected more data there is a significant trend here \
+that can help us make a successful conjuncture. \
+\>", "Text",
+ CellChangeTimes->{{3.823191394193349*^9, 3.823191405361724*^9}, {
+  3.8231924927422247`*^9, 
+  3.823192540006776*^9}},ExpressionUUID->"67160e9c-85ca-4d53-a92d-\
+60856eec9682"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Problem Statement - 2", "Section",
+ CellChangeTimes->{{3.823005961519353*^9, 
+  3.82300596631723*^9}},ExpressionUUID->"feacf3b3-bb09-49cf-bd2a-\
+03763b1a010e"],
+
+Cell[TextData[{
+ "I will use the following sum formula to compute approximation of \[Pi]:\n\t\
+1/\[Pi] = (12) * SUM[ ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"-", "1"}], ")"}], "k"], TraditionalForm]],ExpressionUUID->
+  "fb9b35dd-175f-48e4-9f0e-4b053ced799f"],
+ "(6k)!(13591409 + 545140134k)/ ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"3", "k"}], ")"}], "!"}], ")"}], 
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"k", "!"}], ")"}], "3"], 
+    SuperscriptBox[
+     RowBox[{"(", "640320", ")"}], 
+     RowBox[{
+      RowBox[{"3", "k"}], "+", 
+      RowBox[{"3", "/", "2"}]}]]}], TraditionalForm]],ExpressionUUID->
+  "4972a601-9aeb-4ffc-9fa0-9a8229af03f2"],
+ "\n\nThis formula is known as the Chudnovsky formula for \[Pi] which was \
+written on 1989. I will investigate how the number of correct digits in the \
+approximation of \[Pi] depends on the number of terms used in the sum. "
+}], "Text",
+ CellChangeTimes->{{3.789739908991789*^9, 3.7897399596738243`*^9}, {
+  3.7897413011810894`*^9, 3.7897413346305885`*^9}, {3.789741374832241*^9, 
+  3.78974137649296*^9}, {3.8230060036713667`*^9, 
+  3.823006178186797*^9}},ExpressionUUID->"6adc51eb-bd7f-4214-a2d3-\
+a43891c8f119"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation - Chudnovsky", "Section",
+ CellChangeTimes->{{3.789741203883596*^9, 3.7897412138794947`*^9}, {
+  3.8230071492907557`*^9, 
+  3.823007177388976*^9}},ExpressionUUID->"ed643c6e-46cf-47c7-aa75-\
+b89e5cb561e8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"chudnovsky", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"sum", " ", "=", " ", "0"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{"sum", " ", "+=", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"-", "1"}], ")"}], "i"], ")"}], "*", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"6", "*", "i"}], ")"}], "!"}], ")"}], "*", 
+           RowBox[{"(", 
+            RowBox[{"13591409", "+", 
+             RowBox[{"545140134", "*", "i"}]}], ")"}]}], ")"}], "/", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"3", "*", "i"}], ")"}], "!"}], ")"}], "*", 
+           RowBox[{"(", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"i", "!"}], ")"}], "3"], ")"}], "*", 
+           SuperscriptBox[
+            RowBox[{"(", "640320", ")"}], 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"3", "*", "i"}], "+", 
+              RowBox[{"3", "/", "2"}]}], ")"}]]}], ")"}]}]}], 
+       "\[IndentingNewLine]", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", "n"}], "}"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"sum", "*", 
+      RowBox[{"(", "12", ")"}]}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.823006205981427*^9, 3.8230064236870375`*^9}, 
+   3.823190809126416*^9, {3.8231925687474957`*^9, 3.8231925710858183`*^9}, 
+   3.8231926080191736`*^9, {3.8231926506472054`*^9, 3.823192686143078*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"54898649-f24f-4134-aa79-98bfbdec8f5f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"1", "/", 
+   RowBox[{"chudnovsky", "[", "1", "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8230064419466753`*^9, 3.823006444806548*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"f84719c3-1506-4f4f-83dd-87f0b5d6a8d2"],
+
+Cell[BoxData["3.141592653589793`"], "Output",
+ CellChangeTimes->{3.8230064461847525`*^9, 3.8231218075116644`*^9, 
+  3.8231925472141204`*^9, 3.8231926921020327`*^9, 3.8231931181245103`*^9, 
+  3.8231933928551044`*^9},
+ CellLabel->"Out[3]=",ExpressionUUID->"579dd7de-7eb5-40f1-a5c3-7acc9cea7850"]
+}, Open  ]],
+
+Cell["\<\
+The module below helps us analyze how accurate the Chudnovsky formula really \
+is when compared to the decimal PI. \
+\>", "Text",
+ CellChangeTimes->{{3.8231927176399717`*^9, 3.8231927273755727`*^9}, {
+  3.823193862187163*^9, 
+  3.8231938918821616`*^9}},ExpressionUUID->"7f45fc88-c181-40a2-847c-\
+7fa8219ff29c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"correctDigits2", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"approx", ",", 
+      RowBox[{"i", "=", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"approx", "=", " ", 
+      RowBox[{"1", "/", 
+       RowBox[{"chudnovsky", "[", "n", "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"RealDigits", "[", 
+          RowBox[{"approx", ",", "10", ",", "1", ",", "i"}], "]"}], 
+         "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "\[Equal]", 
+        RowBox[{
+         RowBox[{"RealDigits", "[", 
+          RowBox[{"Pi", ",", "10", ",", "1", ",", "i"}], "]"}], 
+         "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+       RowBox[{"i", "--"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"-", "i"}], "-", "1"}]}]}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "the", " ", "number", " ", "of", " ", "correct", " ", "digits", " ", 
+     "after", " ", "the", " ", "decimal", " ", "point"}], " ", "*)"}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.823121600678542*^9, 3.8231216313835917`*^9}, {
+  3.823121691147233*^9, 3.823121704993639*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"a21eed48-d34b-44da-b2d5-83bc8e78dc51"],
+
+Cell["\<\
+Now that we can calculate and compare how similar the decimal PI is to the \
+result of the Chudnovsky formula. Just like we did above, let us plot the \
+number of correct digits for various values of n. First we need to collect \
+data points to create the plot using a table function. As we have seen above \
+when writing a table function we need to specify how many values our variable \
+n will take. I set n to range from 10 up to 100 this time, with a 10 digit \
+increment.\
+\>", "Text",
+ CellChangeTimes->{{3.823192753458638*^9, 3.8231927925165567`*^9}, {
+  3.8231928268042088`*^9, 3.8231928615504656`*^9}, {3.823193903457493*^9, 
+  3.823193950204911*^9}},ExpressionUUID->"5827c37d-d567-43ca-9573-\
+0852de038c66"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"nDigits2", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"n", ",", 
+      RowBox[{"correctDigits2", "[", "n", "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "10", ",", "100", ",", "10"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.823193432928097*^9, 3.823193436522534*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"67345d00-791b-4df2-88f1-13a7eb13f883"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"10", ",", "155"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"20", ",", "296"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"30", ",", "439"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"40", ",", "580"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"50", ",", "722"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"60", ",", "864"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"70", ",", "1006"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"80", ",", "1148"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"90", ",", "1289"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"100", ",", "1432"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.8231218796435804`*^9, 3.8231218903145103`*^9}, 
+   3.8231931005052357`*^9, 3.82319338648724*^9, 3.8231935744566584`*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"d2a8b18f-ba4d-46cf-a1cc-701954cdfd45"]
+}, Open  ]],
+
+Cell["\<\
+One thing to note is that when running the table function on the Chudnovsky \
+formula there was a considerable time difference when compared to the \
+Ramanujan formula. \
+\>", "Text",
+ CellChangeTimes->{{3.823193627600419*^9, 
+  3.823193691284848*^9}},ExpressionUUID->"ba3d3f42-8737-4dd3-9ceb-\
+2083f093bd37"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"nDigits2", ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<terms in sum\>\"", ",", "\"\<correct digits\>\""}], "}"}]}],
+    ",", 
+   RowBox[{
+   "PlotLabel", "\[Rule]", " ", 
+    "\"\<Correct digits of PI produced for the Chudnocsky formula\>\""}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.7902935115526085`*^9, 3.7902935195900593`*^9}, {
+   3.790293787201981*^9, 3.790293787803336*^9}, {3.7902938421254716`*^9, 
+   3.790293860616047*^9}, 3.823193239206997*^9, {3.8231955339957886`*^9, 
+   3.8231955788143063`*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"8af05732-2cb5-4007-8ca7-8ff9a43e0414"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`],
+      AbsoluteThickness[1.6], 
+     PointBox[{{10., 155.}, {20., 296.}, {30., 439.}, {40., 580.}, {50., 
+      722.}, {60., 864.}, {70., 1006.}, {80., 1148.}, {90., 1289.}, {100., 
+      1432.}}]}, {
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      0.012833333333333334`], AbsoluteThickness[1.6]}, {}}, {
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      0.012833333333333334`], AbsoluteThickness[1.6]}, {}}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\"terms in sum\"", TraditionalForm], 
+    FormBox["\"correct digits\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotLabel->FormBox[
+   "\"Correct digits of PI produced for the Chudnocsky formula\"", 
+    TraditionalForm],
+  PlotRange->{{0, 100.}, {0, 1432.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.82312190441916*^9, 3.823193613667198*^9, {3.823195542984036*^9, 
+   3.8231955809769917`*^9}},
+ CellLabel->"Out[27]=",ExpressionUUID->"6490c53d-3c79-48cc-b8f8-0b869a994505"]
+}, Open  ]],
+
+Cell["\<\
+We see the number of digits increases in a linear form which helps us assume \
+that even if we collected more data there is a significant trend here that \
+can help us make a successful conjuncture. As the number of terms increases \
+the number of correct digits also linearly increases, by this I mean we can \
+roughly see that the number of digits when provided 20 terms is double the \
+amount to that of 10 terms. \
+\>", "Text",
+ CellChangeTimes->{{3.8231933599707427`*^9, 3.823193378106744*^9}, 
+   3.82319345079088*^9, {3.8231937022200875`*^9, 3.8231938149575987`*^9}, {
+   3.8231953400759954`*^9, 
+   3.8231953408265457`*^9}},ExpressionUUID->"e9c32b2a-b113-40d1-883d-\
+2e033b4a927e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Problem Statement", "Section",
+ CellChangeTimes->{{3.7897411618844433`*^9, 
+  3.7897411663074617`*^9}},ExpressionUUID->"d9c47d0d-4a37-4b8e-a0d7-\
+faef8b40c58d"],
+
+Cell[TextData[{
+ "I will use the following system of equations to compute approximation of \
+\[Pi]: \n",
+ Cell[BoxData[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"a", "[", "i", "]"}], "=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"a", "[", 
+        RowBox[{"i", "-", "1"}], "]"}], "+", 
+       RowBox[{"b", "[", 
+        RowBox[{"i", "-", "1"}], "]"}]}], ")"}], "/", "2"}]}], 
+   ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"b", "[", "i", "]"}], " ", "=", " ", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"a", "[", 
+        RowBox[{"i", "-", "1"}], "]"}], "*", 
+       RowBox[{"b", "[", 
+        RowBox[{"i", "-", "1"}], "]"}]}], ")"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"c", "[", "i", "]"}], " ", "=", " ", 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"a", "[", "i", "]"}], "2"], "-", 
+     SuperscriptBox[
+      RowBox[{"b", "[", "i", "]"}], "2"]}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"s", "[", "i", "]"}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{"s", "[", 
+      RowBox[{"i", "-", "1"}], "]"}], "-", 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["2", "i"], "*", 
+       RowBox[{"c", "[", "i", "]"}]}], ")"}]}]}], 
+   ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"p", "[", "i", "]"}], " ", "=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"2", 
+      SuperscriptBox[
+       RowBox[{"a", "[", "i", "]"}], "2"]}], ")"}], "/", 
+    RowBox[{"s", "[", "i", "]"}]}]}]}],
+  CellChangeTimes->{{3.8227422753438606`*^9, 3.8227423016857395`*^9}, {
+   3.8227423451938076`*^9, 3.822742401718649*^9}, {3.8230072264774847`*^9, 
+   3.8230072900882764`*^9}, {3.8230073367220554`*^9, 
+   3.8230076137648277`*^9}, {3.823121855616819*^9, 3.8231218639505286`*^9}},
+  ExpressionUUID->"622f7535-9a55-49b4-be32-ab80bfda9fb3"]
+}], "Text",
+ CellChangeTimes->{{3.789739908991789*^9, 3.7897399596738243`*^9}, {
+  3.7897413011810894`*^9, 3.7897413346305885`*^9}, {3.789741374832241*^9, 
+  3.78974137649296*^9}, {3.82311838821566*^9, 3.823118398524949*^9}, {
+  3.823193479022258*^9, 
+  3.8231934985669785`*^9}},ExpressionUUID->"3754c122-93e7-4e59-9f0f-\
+94878207b5d0"],
+
+Cell["\<\
+This formula is written by Salamin and Brent in 1976. Just like the previous \
+formulas I will investigate how the number of correct digits in the \
+approximation of \[Pi] depends on the number of terms used in the sum. \
+\>", "Text",
+ CellChangeTimes->{{3.823193510040901*^9, 
+  3.823193602168082*^9}},ExpressionUUID->"2c18bec2-53bb-47fd-8a6c-\
+0cfe483518f9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation - Salamin and Brent", "Section",
+ CellChangeTimes->{{3.789741203883596*^9, 3.7897412138794947`*^9}, {
+  3.823007051646277*^9, 3.823007071403943*^9}, {3.8230071855559607`*^9, 
+  3.823007192550618*^9}},ExpressionUUID->"0658b8c6-60a4-4eca-8fc4-\
+1448a6836e0a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"salaminbrent", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "a", ",", " ", "b", ",", " ", "c", ",", " ", "s", ",", " ", "p"}], "}"}],
+     ",", "                  ", 
+    RowBox[{"(*", " ", 
+     RowBox[{
+     "stating", " ", "all", " ", "of", " ", "the", " ", "local", " ", 
+      "variables"}], " ", "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"a", "[", "0", "]"}], "=", "1"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"b", "[", "0", "]"}], " ", "=", " ", 
+      RowBox[{"1", "/", 
+       RowBox[{"Sqrt", "[", "2", "]"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"s", "[", "0", "]"}], " ", "=", " ", 
+      RowBox[{"1", "/", "2"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"a", "[", "i", "]"}], "=", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"a", "[", 
+             RowBox[{"i", "-", "1"}], "]"}], "+", 
+            RowBox[{"b", "[", 
+             RowBox[{"i", "-", "1"}], "]"}]}], ")"}], "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"b", "[", "i", "]"}], " ", "=", " ", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"a", "[", 
+             RowBox[{"i", "-", "1"}], "]"}], "*", 
+            RowBox[{"b", "[", 
+             RowBox[{"i", "-", "1"}], "]"}]}], ")"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"c", "[", "i", "]"}], " ", "=", " ", 
+         RowBox[{
+          SuperscriptBox[
+           RowBox[{"a", "[", "i", "]"}], "2"], "-", 
+          SuperscriptBox[
+           RowBox[{"b", "[", "i", "]"}], "2"]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"s", "[", "i", "]"}], " ", "=", " ", 
+         RowBox[{
+          RowBox[{"s", "[", 
+           RowBox[{"i", "-", "1"}], "]"}], "-", 
+          RowBox[{"(", 
+           RowBox[{
+            SuperscriptBox["2", "i"], "*", 
+            RowBox[{"c", "[", "i", "]"}]}], ")"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"p", "[", "i", "]"}], " ", "=", " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"2", 
+            SuperscriptBox[
+             RowBox[{"a", "[", "i", "]"}], "2"]}], ")"}], "/", 
+          RowBox[{"s", "[", "i", "]"}]}]}]}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}], ";", "     ", 
+     "\[IndentingNewLine]", 
+     RowBox[{"p", "[", "n", "]"}]}]}], 
+   "                                                                       ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"return", " ", 
+     RowBox[{"p", "[", "n", "]"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.8227422753438606`*^9, 3.8227423016857395`*^9}, {
+  3.8227423451938076`*^9, 3.822742401718649*^9}, {3.8230072264774847`*^9, 
+  3.8230072900882764`*^9}, {3.8230073367220554`*^9, 3.8230076137648277`*^9}, {
+  3.823121855616819*^9, 3.8231218639505286`*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"581ffca2-06a1-41e6-984d-0cc5183a2032"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"salaminbrent", "[", "10", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8230075889818916`*^9, 3.823007596711562*^9}, 
+   3.8231219278713417`*^9},
+ CellLabel->"In[13]:=",ExpressionUUID->"5b20d3b5-e0d6-4ea4-8406-b6f3274ec22c"],
+
+Cell[BoxData["3.1415926535888143`"], "Output",
+ CellChangeTimes->{{3.82300759751049*^9, 3.8230076207274942`*^9}, {
+   3.823121921087188*^9, 3.8231219290057015`*^9}, 3.82319424531616*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"c376dbbf-43e8-4e3e-b9b7-95269f6988e5"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"correctDigits3", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"approx", ",", 
+      RowBox[{"i", "=", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"approx", "=", 
+      RowBox[{"salaminbrent", "[", "n", "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", " ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"RealDigits", "[", 
+          RowBox[{"approx", ",", "10", ",", "1", ",", "i"}], "]"}], 
+         "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "\[Equal]", 
+        RowBox[{
+         RowBox[{"RealDigits", "[", 
+          RowBox[{"Pi", ",", "10", ",", "1", ",", "i"}], "]"}], 
+         "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+       RowBox[{"i", "--"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"-", "i"}], "-", "1"}]}]}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "the", " ", "number", " ", "of", " ", "correct", " ", "digits", " ", 
+     "after", " ", "the", " ", "decimal", " ", "point"}], " ", "*)"}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.8231219451413746`*^9, 3.823121953115507*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"e791f279-7bea-4d07-a994-b4d8833b8760"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"nDigits", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"n", ",", 
+      RowBox[{"correctDigits3", "[", "n", "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.823121966455696*^9, 3.823121989067647*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"2255e2c4-8515-4c32-bfe0-0e0cdafdc7e6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "9"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "42"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6", ",", "85"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"7", ",", "173"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"8", ",", "347"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"9", ",", "697"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "1393"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.823121999301252*^9, {3.8231942397770863`*^9, 3.823194258944895*^9}},
+ CellLabel->"Out[15]=",ExpressionUUID->"e73c0352-389d-424d-9262-3b58d31371f0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"nDigits", ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<terms\>\"", ",", "\"\<correct digits\>\""}], "}"}]}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.8231942338210306`*^9, 3.823194234568959*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"bac72fa8-8cb5-47b3-93f5-e5e6996f9c76"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`],
+      AbsoluteThickness[1.6], 
+     PointBox[{{1., 1.}, {2., 3.}, {3., 9.}, {4., 20.}, {5., 42.}, {6., 
+      85.}, {7., 173.}, {8., 347.}, {9., 697.}, {10., 1393.}}]}, {
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      0.012833333333333334`], AbsoluteThickness[1.6]}, {}}, {
+     {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      0.012833333333333334`], AbsoluteThickness[1.6]}, {}}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\"terms\"", TraditionalForm], 
+    FormBox["\"correct digits\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{0, 10.}, {0, 1393.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.823122009521447*^9, {3.8231942361579275`*^9, 3.823194261928364*^9}},
+ CellLabel->"Out[16]=",ExpressionUUID->"877bf4cd-2c93-491d-89c1-8cc1c04929c5"]
+}, Open  ]],
+
+Cell["\<\
+We see the number of digits increases in an exponential form this time. When \
+looking at the graph there was a constant and slight increase in the number \
+of correct digits until n=6 then we can see that the Y axis dramatically \
+increases as we move along the X axis and increase the terms . Unlike the \
+rest of the formulas I am very curious to see the runtime for this specific \
+code. \
+\>", "Text",
+ CellChangeTimes->{{3.8231941283144417`*^9, 3.8231942299796066`*^9}, {
+  3.8231942707366867`*^9, 
+  3.823194315217207*^9}},ExpressionUUID->"9fd0b44c-b0b3-4bb0-bea8-\
+1b9ca81d4ae7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Conclusions and Conjunctures", "Section",
+ CellChangeTimes->{{3.8231944808462615`*^9, 
+  3.823194517725605*^9}},ExpressionUUID->"cbfa98b6-6eb7-4242-b832-\
+d027540dd0b1"],
+
+Cell[TextData[{
+ "As shown in the plots above, the number of correct digits for the Ramanujan \
+formula as well as the Chudnovsky formula doubles every-time there is an \
+increase in ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "4d757725-0f7b-44a0-afd4-9650bde27e2a"],
+ ".  I conjecture that this pattern holds as ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "a13afe42-4396-44aa-8048-5c9e4722c0b6"],
+ " increases for both formulas, though I only tested values of ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ " up to 1000 for Ramanujan and a 100 for Chudnovsky. One important detail to \
+note is that the Chudnovsky formula runs slower than the Ramanujan. \nIn the \
+third plot, the number of correct digits exponentially increases with an \
+increase to ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "17323676-6033-400f-99d4-6868d87c06c5"],
+ ". It is also important to note that this increase doesn\[CloseCurlyQuote]t \
+happen until n=6.  I conjecture that this pattern holds as ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "8f280f93-59df-41f4-93e1-ef0a8412f70a"],
+ " increases for both formulas, though I only tested values of ",
+ StyleBox["n",
+  FontSlant->"Italic"],
+ " up to 10 iterations. \nWhen relating all the formulas to each-other we can \
+see that the Salamin and brent formula is the most accurate one where as the \
+other two formulas are some what of  mirror images to each-other. Therefore \
+the Salamin and brent formula seems to be the most practical way of computing \
+lots of digits of \[Pi]"
+}], "Text",
+ CellChangeTimes->{{3.8231945483768244`*^9, 3.8231946335440464`*^9}, {
+  3.8231946658281393`*^9, 3.8231949905223827`*^9}, {3.8231954794681005`*^9, 
+  3.823195480483385*^9}},ExpressionUUID->"4b8d8a46-ddd1-4da3-8c48-\
+96523317e3f2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Limitations and Extensions", "Section",
+ CellChangeTimes->{{3.8231949987883835`*^9, 
+  3.823195007759014*^9}},ExpressionUUID->"21e5c048-932b-45a6-8186-\
+c9bddab7cafe"],
+
+Cell[TextData[{
+ "My method of running all of the formula using a module and a range of ",
+ StyleBox["[n]",
+  FontWeight->"Bold"],
+ " is not a great way of figuring out how many terms are required to obtain a \
+desired number of digits of \[Pi]. I believe that there should perhaps be a \
+way in which I instantly know how many correct digits I would achieve from a \
+specific number or n. Perhaps this could be studied theoretically (rather \
+than computationally) using results about rates of convergence of infinite \
+series.\nI would also have liked to calculate the runtime for all of the \
+formulas listed in this notebook. I thought the run time seemed to increase \
+as we go from Ramanujan to Salamin and Brent. It is intuitive that because \
+Salamin and Brent was a recursive formula that there would be a longer run \
+time but the difference bettween the Ramanujan and Chudnovsky formula is \
+something I couldn\[CloseCurlyQuote]t really explain. Which in my opinion can \
+be an extension for future work. "
+}], "Text",
+ CellChangeTimes->{{3.822153554971228*^9, 3.8221536254004545`*^9}, {
+  3.822153676598462*^9, 3.822153770777583*^9}, {3.822153861078582*^9, 
+  3.822153886555567*^9}, {3.8231950354859314`*^9, 3.8231953114097013`*^9}, {
+  3.823195390629061*^9, 
+  3.823195453365921*^9}},ExpressionUUID->"14a992d7-e9af-484d-8ffc-\
+52ba961b10bf"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1280, 637},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 265, 4, 96, "Title",ExpressionUUID->"6e8a072c-1c3f-4d1e-994e-1e142659154f"],
+Cell[848, 28, 432, 9, 56, "Text",ExpressionUUID->"33f14418-89ec-4f5a-abf1-f6994c494be3"],
+Cell[CellGroupData[{
+Cell[1305, 41, 218, 4, 67, "Section",ExpressionUUID->"234d9101-b593-46e4-8524-80ef46f8383b"],
+Cell[1526, 47, 1040, 27, 58, "Text",ExpressionUUID->"48ceb5d0-1fc3-4516-b4ba-b9eb004531dd"],
+Cell[2569, 76, 593, 10, 34, "Text",ExpressionUUID->"e6aa05fb-5afc-4181-aab3-1108d623fffb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3199, 91, 222, 4, 67, "Section",ExpressionUUID->"4ffbd559-bf3d-4ed6-bcfd-f495c6ecb407"],
+Cell[3424, 97, 350, 7, 56, "Text",ExpressionUUID->"1cc60df2-bfac-4837-b433-8c88cdb2934b"],
+Cell[CellGroupData[{
+Cell[3799, 108, 860, 25, 34, "Input",ExpressionUUID->"0177fcd3-14fc-4588-9a12-39b71fae961d"],
+Cell[CellGroupData[{
+Cell[4684, 137, 247, 5, 22, "Print",ExpressionUUID->"194e4b5f-c4e1-460d-8ac7-3f714dcec23b"],
+Cell[4934, 144, 277, 6, 40, "Print",ExpressionUUID->"1d606de7-71dd-4e1c-9a22-808699550cfe"],
+Cell[5214, 152, 288, 6, 40, "Print",ExpressionUUID->"cede35f7-d2c7-4f4b-a848-7ff2bd146bdd"],
+Cell[5505, 160, 298, 6, 40, "Print",ExpressionUUID->"94d261db-a5b0-4ccb-9dde-963979da5969"],
+Cell[5806, 168, 316, 7, 40, "Print",ExpressionUUID->"459a2165-870f-49ca-8d2d-33c495c3da96"],
+Cell[6125, 177, 324, 7, 40, "Print",ExpressionUUID->"c21dd5c1-1266-492a-ab35-5cf0b1aceb7f"]
+}, Open  ]]
+}, Open  ]],
+Cell[6476, 188, 288, 6, 34, "Text",ExpressionUUID->"1ed3781b-3c6d-46f5-963c-5dccbc4fe2af"],
+Cell[6767, 196, 1945, 49, 122, "Input",ExpressionUUID->"6cc85909-bfee-46b3-82d2-2189449c6569"],
+Cell[CellGroupData[{
+Cell[8737, 249, 538, 12, 28, "Input",ExpressionUUID->"3cbbfe2b-f459-4fa1-9163-00601b737208"],
+Cell[9278, 263, 419, 6, 32, "Output",ExpressionUUID->"2f7bbc81-cd34-411b-8805-c851fb47344a"]
+}, Open  ]],
+Cell[9712, 272, 403, 8, 56, "Text",ExpressionUUID->"75a6be47-db57-4005-b827-5858173dfd75"],
+Cell[10118, 282, 129, 3, 28, "Input",ExpressionUUID->"2cd3cc60-71f6-4c36-aa9f-f6cef90dbd0a"],
+Cell[10250, 287, 1499, 36, 105, "Input",ExpressionUUID->"612286f1-68bf-4495-91c7-86e61fa129cc"],
+Cell[11752, 325, 793, 13, 78, "Text",ExpressionUUID->"a0f8d287-6764-4500-a636-2762c2abba14"],
+Cell[CellGroupData[{
+Cell[12570, 342, 712, 15, 28, "Input",ExpressionUUID->"c5e9d56f-9bba-4fa6-9f1a-7853caae9359"],
+Cell[13285, 359, 989, 27, 32, "Output",ExpressionUUID->"d001b1eb-6197-43f7-997c-355fd5755b8b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14311, 391, 760, 16, 28, "Input",ExpressionUUID->"d59b93b8-0c9f-44ba-8e0a-5f71bfbc40a4"],
+Cell[15074, 409, 1893, 48, 230, "Output",ExpressionUUID->"d1d360fa-e8c7-4a69-853d-3091d98adfd2"]
+}, Open  ]],
+Cell[16982, 460, 404, 8, 56, "Text",ExpressionUUID->"67160e9c-85ca-4d53-a92d-60856eec9682"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17423, 473, 165, 3, 67, "Section",ExpressionUUID->"feacf3b3-bb09-49cf-bd2a-03763b1a010e"],
+Cell[17591, 478, 1283, 34, 122, "Text",ExpressionUUID->"6adc51eb-bd7f-4214-a2d3-a43891c8f119"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18911, 517, 225, 4, 67, "Section",ExpressionUUID->"ed643c6e-46cf-47c7-aa75-b89e5cb561e8"],
+Cell[19139, 523, 1876, 50, 122, "Input",ExpressionUUID->"54898649-f24f-4134-aa79-98bfbdec8f5f"],
+Cell[CellGroupData[{
+Cell[21040, 577, 261, 5, 28, "Input",ExpressionUUID->"f84719c3-1506-4f4f-83dd-87f0b5d6a8d2"],
+Cell[21304, 584, 293, 4, 32, "Output",ExpressionUUID->"579dd7de-7eb5-40f1-a5c3-7acc9cea7850"]
+}, Open  ]],
+Cell[21612, 591, 320, 7, 34, "Text",ExpressionUUID->"7f45fc88-c181-40a2-847c-7fa8219ff29c"],
+Cell[21935, 600, 1448, 35, 105, "Input",ExpressionUUID->"a21eed48-d34b-44da-b2d5-83bc8e78dc51"],
+Cell[23386, 637, 727, 12, 78, "Text",ExpressionUUID->"5827c37d-d567-43ca-9573-0852de038c66"],
+Cell[CellGroupData[{
+Cell[24138, 653, 431, 11, 28, "Input",ExpressionUUID->"67345d00-791b-4df2-88f1-13a7eb13f883"],
+Cell[24572, 666, 899, 25, 32, "Output",ExpressionUUID->"d2a8b18f-ba4d-46cf-a1cc-701954cdfd45"]
+}, Open  ]],
+Cell[25486, 694, 319, 7, 34, "Text",ExpressionUUID->"ba3d3f42-8737-4dd3-9ceb-2083f093bd37"],
+Cell[CellGroupData[{
+Cell[25830, 705, 679, 15, 28, "Input",ExpressionUUID->"8af05732-2cb5-4007-8ca7-8ff9a43e0414"],
+Cell[26512, 722, 1903, 49, 230, "Output",ExpressionUUID->"6490c53d-3c79-48cc-b8f8-0b869a994505"]
+}, Open  ]],
+Cell[28430, 774, 699, 12, 78, "Text",ExpressionUUID->"e9c32b2a-b113-40d1-883d-2e033b4a927e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29166, 791, 166, 3, 67, "Section",ExpressionUUID->"d9c47d0d-4a37-4b8e-a0d7-faef8b40c58d"],
+Cell[29335, 796, 2218, 64, 152, "Text",ExpressionUUID->"3754c122-93e7-4e59-9f0f-94878207b5d0"],
+Cell[31556, 862, 370, 7, 56, "Text",ExpressionUUID->"2c18bec2-53bb-47fd-8a6c-0cfe483518f9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31963, 874, 278, 4, 67, "Section",ExpressionUUID->"0658b8c6-60a4-4eca-8fc4-1448a6836e0a"],
+Cell[32244, 880, 3253, 84, 265, "Input",ExpressionUUID->"581ffca2-06a1-41e6-984d-0cc5183a2032"],
+Cell[CellGroupData[{
+Cell[35522, 968, 269, 5, 28, "Input",ExpressionUUID->"5b20d3b5-e0d6-4ea4-8406-b6f3274ec22c"],
+Cell[35794, 975, 265, 3, 32, "Output",ExpressionUUID->"c376dbbf-43e8-4e3e-b9b7-95269f6988e5"]
+}, Open  ]],
+Cell[36074, 981, 1369, 33, 105, "Input",ExpressionUUID->"e791f279-7bea-4d07-a994-b4d8833b8760"],
+Cell[CellGroupData[{
+Cell[37468, 1018, 424, 10, 28, "Input",ExpressionUUID->"2255e2c4-8515-4c32-bfe0-0e0cdafdc7e6"],
+Cell[37895, 1030, 828, 25, 32, "Output",ExpressionUUID->"e73c0352-389d-424d-9262-3b58d31371f0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38760, 1060, 362, 8, 28, "Input",ExpressionUUID->"bac72fa8-8cb5-47b3-93f5-e5e6996f9c76"],
+Cell[39125, 1070, 1729, 44, 236, "Output",ExpressionUUID->"877bf4cd-2c93-491d-89c1-8cc1c04929c5"]
+}, Open  ]],
+Cell[40869, 1117, 597, 11, 56, "Text",ExpressionUUID->"9fd0b44c-b0b3-4bb0-bea8-1b9ca81d4ae7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41503, 1133, 175, 3, 67, "Section",ExpressionUUID->"cbfa98b6-6eb7-4242-b832-d027540dd0b1"],
+Cell[41681, 1138, 1850, 38, 166, "Text",ExpressionUUID->"4b8d8a46-ddd1-4da3-8c48-96523317e3f2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43568, 1181, 173, 3, 67, "Section",ExpressionUUID->"21e5c048-932b-45a6-8186-c9bddab7cafe"],
+Cell[43744, 1186, 1354, 22, 144, "Text",ExpressionUUID->"14a992d7-e9af-484d-8ffc-52ba961b10bf"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,1656 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     63059,       1648]
+NotebookOptionsPosition[     56425,       1537]
+NotebookOutlinePosition[     56766,       1552]
+CellTagsIndexPosition[     56723,       1549]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Pell Project Report", "Title",
+ CellChangeTimes->{{3.8236237612297225`*^9, 
+  3.8236237760749893`*^9}},ExpressionUUID->"37bf34b4-30c2-4dea-9e95-\
+5f7a505819be"],
+
+Cell[TextData[{
+ "Math 242 - Modern Computational Mathematics\nDone by: ",
+ StyleBox["Dagmawe Haileslassie",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.8236237811536026`*^9, 
+  3.8236238110101233`*^9}},ExpressionUUID->"c27518c5-b24e-4ccc-b86c-\
+89013f9bf266"],
+
+Cell[CellGroupData[{
+
+Cell["Problem Statement - 1", "Section",
+ CellChangeTimes->{{3.823623817230898*^9, 
+  3.8236238288131237`*^9}},ExpressionUUID->"82a361b2-8f5e-4f64-837f-\
+1d965549e068"],
+
+Cell[TextData[{
+ "I will generate at-least two other polynomial identities similar to those \
+described below. \n\t\t\t\t\t",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"P", "[", "n", "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontWeight->"Bold",ExpressionUUID->"a54d71c7-a83f-49a5-8785-ae4cebd699c5"],
+ StyleBox["+2 = 2P[n+1] + P[n], P[0] = 0, P[1] = 1 ",
+  FontWeight->"Bold"]
+}], "Text",
+ CellChangeTimes->{{3.8236238349995346`*^9, 3.8236239089699125`*^9}, {
+  3.823624132352273*^9, 
+  3.8236242406822205`*^9}},ExpressionUUID->"9451dc23-8c1c-4228-9dcc-\
+267c8211dc69"],
+
+Cell[TextData[{
+ "This is known as the Pell sequence. I will investigate an identity \
+involving ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["P", 
+    RowBox[{"7", "n"}]], TraditionalForm]],ExpressionUUID->
+  "82ecac82-07f2-4809-8fb8-41dc60b72752"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["P", 
+    RowBox[{"9", "n"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "2cc7ed07-b3cb-4d7b-bab3-9eea7effaee0"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["P", 
+    RowBox[{"11", "n"}]], TraditionalForm]],ExpressionUUID->
+  "22f11de1-6515-4ca4-9d99-81a69ea9f698"],
+ " and create a conjuncture that verifies these identities. "
+}], "Text",
+ CellChangeTimes->{{3.823624255446859*^9, 3.823624353282527*^9}, {
+   3.8236244757243085`*^9, 3.823624498002159*^9}, {3.8236246027250347`*^9, 
+   3.8236246273381124`*^9}, 
+   3.8236250664673758`*^9},ExpressionUUID->"a0068096-32bf-47e2-a3e6-\
+3fbffbbd132a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Generating the Pell and the Pell Lucas sequences", "Section",
+ CellChangeTimes->{{3.8236245242875166`*^9, 3.823624537755438*^9}, {
+   3.8236250774577217`*^9, 3.8236250876288133`*^9}, 3.823777391705323*^9, {
+   3.823791541898954*^9, 
+   3.8237915555223923`*^9}},ExpressionUUID->"f875daa1-24be-4473-ae41-\
+3c8887afc03e"],
+
+Cell[TextData[{
+ "First I will define a module that generates a recursive sequence. The \
+following module generateSequence takes three parameters and returns a list. \
+Specifically we can see that ",
+ StyleBox["generateSequence[",
+  FontFamily->"Consolas",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "0"], TraditionalForm]],ExpressionUUID->
+  "72d3196d-9879-45b7-ad7b-1ffbaf8f53f1"],
+ StyleBox[", ",
+  FontFamily->"Consolas",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "1"], TraditionalForm]],ExpressionUUID->
+  "7f2f5bf2-da53-40a2-a945-b7ff2cd60336"],
+ StyleBox[", ",
+  FontFamily->"Consolas",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "0171d7d2-af5d-4c1e-9351-c9421662332b"],
+ StyleBox["]",
+  FontFamily->"Consolas",
+  FontWeight->"Bold"],
+ " returns a list of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "\[GreaterEqual]", " ", "2"}], TraditionalForm]],
+  ExpressionUUID->"c6db46e3-76d7-4268-9416-9a895b5b8e29"],
+ " terms. The first two terms are ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "0"], TraditionalForm]],ExpressionUUID->
+  "7d2ed279-10de-44e5-8b55-ca6bf6adabe0"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "1"], TraditionalForm]],ExpressionUUID->
+  "a4b6b362-7681-4278-9ae5-9dc98ddf4ee5"],
+ "; all other terms are computed by the recurrence ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "n"], "=", 
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["a", 
+       RowBox[{"n", "-", "1"}]]}], "+", 
+     SubscriptBox["a", 
+      RowBox[{"n", "-", "2"}]]}]}], TraditionalForm]],ExpressionUUID->
+  "6ad51cba-501d-4f90-843b-38e2a3c1afe7"],
+ ". One thing to note about this module is that it doesn\[CloseCurlyQuote]t \
+simply return the nth term, due to the append function it manages to return a \
+list of n terms. "
+}], "Text",
+ CellChangeTimes->{{3.8237911470068192`*^9, 
+  3.82379123701119*^9}},ExpressionUUID->"d65b2bfe-fd08-4685-aebf-\
+398c8d8cc4cf"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"generateSequence", "[", 
+   RowBox[{"a_", ",", "b_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"seq", "=", 
+       RowBox[{"{", 
+        RowBox[{"a", ",", " ", "b"}], "}"}]}], ",", " ", 
+      RowBox[{"val1", "=", "a"}], ",", " ", 
+      RowBox[{"val2", "=", "b"}], ",", "next", ",", " ", 
+      RowBox[{"m", "=", "2"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"n", " ", "\[LessEqual]", " ", "2"}], ",", " ", 
+       RowBox[{"Return", "[", "seq", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Do", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"next", "=", 
+         RowBox[{
+          RowBox[{"m", "*", "val2"}], "+", "val1"}]}], ";", "            ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"compute", " ", "the", " ", "next", " ", "value"}], " ", 
+         "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"seq", "=", 
+         RowBox[{"Append", "[", 
+          RowBox[{"seq", ",", "next"}], "]"}]}], ";", "     ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "append", " ", "the", " ", "next", " ", "value", " ", "to", " ", 
+          "the", " ", "sequence"}], " ", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"val1", "=", "val2"}], ";", 
+        "                                ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"shift", " ", "val2", " ", "to", " ", "val1"}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"val2", "=", "next"}], ";"}], 
+       "                                 ", 
+       RowBox[{"(*", " ", 
+        RowBox[{"shift", " ", "next", " ", "to", " ", "val2"}], " ", "*)"}], 
+       "\[IndentingNewLine]", ",", 
+       RowBox[{"n", "-", "2"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     "seq"}]}], "      ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"return", " ", "the", " ", "sequence"}], " ", "*)"}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"d48cb868-f611-41d5-91e3-000a119bbb3a"],
+
+Cell["\<\
+let\[CloseCurlyQuote]s see if the above module computes what we want it to, \
+so let us try to generate ten terms of the Pell sequence and then let\
+\[CloseCurlyQuote]s also try to generate the first ten terms of the Pell \
+Lucas sequence. The major difference between these two sequences is the \
+starting terms.  \
+\>", "Text",
+ CellChangeTimes->{{3.8237912436843414`*^9, 
+  3.8237913656723614`*^9}},ExpressionUUID->"1084a6a1-4d28-4dbd-83ed-\
+42254ff4930b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"pellSeqExample", "=", 
+  RowBox[{"generateSequence", "[", 
+   RowBox[{"0", ",", "1", ",", "10"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"pellLucasSeqExample", " ", "=", " ", 
+  RowBox[{"generateSequence", "[", 
+   RowBox[{"2", ",", "2", ",", "10"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.823776951901205*^9, 3.8237769654430313`*^9}, {
+  3.8237913748243775`*^9, 3.823791408599462*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"7e8d3fb7-6c52-4ab5-bf99-91e0e042b29a"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "1", ",", "2", ",", "5", ",", "12", ",", "29", ",", "70", ",", 
+   "169", ",", "408", ",", "985"}], "}"}]], "Output",
+ CellChangeTimes->{3.82379141027697*^9, 3.823792982448122*^9, 
+  3.8237931471307077`*^9},
+ CellLabel->"Out[3]=",ExpressionUUID->"294f38f0-56a8-4509-ba65-30a4ee9c790f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2", ",", "2", ",", "6", ",", "14", ",", "34", ",", "82", ",", "198", ",", 
+   "478", ",", "1154", ",", "2786"}], "}"}]], "Output",
+ CellChangeTimes->{3.82379141027697*^9, 3.823792982448122*^9, 
+  3.8237931471347065`*^9},
+ CellLabel->"Out[4]=",ExpressionUUID->"fccf1189-329e-4dd3-aa60-4dea33a4c302"]
+}, Open  ]],
+
+Cell["\<\
+One thing that becomes apparent when looking at out code thus far is that \
+there will most likely be repetitive calls for the generate sequence \
+function, to avoid that predicament let us define a variable that computes a \
+long list of the first 10000 terms for the Pell sequence as well as the Pell \
+Lucas sequence and store them.  We will increase the number of terms \
+accordingly later on in this project. \
+\>", "Text",
+ CellChangeTimes->{{3.823791434610862*^9, 3.8237914783097267`*^9}, {
+   3.8237915811209364`*^9, 3.8237916910639095`*^9}, {3.823791730064025*^9, 
+   3.8237917542681913`*^9}, {3.8237918379676228`*^9, 3.8237918555210905`*^9}, 
+   3.8237932332744884`*^9},ExpressionUUID->"17f420f8-8684-48f9-8a02-\
+86293eccb6e4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pellSeq", "=", 
+   RowBox[{"generateSequence", "[", 
+    RowBox[{"0", ",", "1", ",", "10000"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"PellLucasSeq", " ", "=", " ", 
+   RowBox[{"generateSequence", "[", 
+    RowBox[{"2", ",", "2", ",", "10000"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.823791693672448*^9, 3.8237917122539825`*^9}, {
+  3.823793221449484*^9, 3.823793223631693*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"fbe8f7de-594d-40fd-8d95-edd384f1ed06"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"p", "[", "n_", "]"}], ":=", 
+  RowBox[{"pellSeq", "\[LeftDoubleBracket]", 
+   RowBox[{"n", "+", "1"}], 
+   "\[RightDoubleBracket]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"q", "[", "n_", "]"}], ":=", 
+  RowBox[{"PellLucasSeq", "\[LeftDoubleBracket]", 
+   RowBox[{"n", "+", "1"}], "\[RightDoubleBracket]"}]}]}], "Input",
+ CellChangeTimes->{{3.8236382788079567`*^9, 3.823638280472641*^9}, {
+  3.823791759952695*^9, 3.8237917904558935`*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"90f501d8-6122-49f5-a504-2591c75c51ed"],
+
+Cell[TextData[{
+ "The above code allows us to give an index 0 instead of 1 to all of the \
+lists we have created in the chunk before. Next we want to verify if the \
+first pell number is denoted by ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["p", "0"], TraditionalForm]],ExpressionUUID->
+  "ff5b1e15-7c87-451a-8175-34f8c783a995"],
+ " and the first Pell Lucas number is donated by ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["q", "0"], TraditionalForm]],ExpressionUUID->
+  "e4bd9c72-f920-4192-906e-319469bed0c2"]
+}], "Text",
+ CellChangeTimes->{{3.8237918081968346`*^9, 3.823791815963109*^9}, {
+  3.8237918652333727`*^9, 3.823791911125395*^9}, {3.823792307395714*^9, 
+  3.823792395821825*^9}},ExpressionUUID->"68e3d22d-7905-4b79-8348-\
+f303e017bbc4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"p", "[", "0", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"q", "[", "0", "]"}]}], "Input",
+ CellChangeTimes->{{3.823638284046664*^9, 3.8236382919438505`*^9}, {
+  3.8237769830610914`*^9, 3.8237769837322874`*^9}, {3.8237917998369675`*^9, 
+  3.8237918026055627`*^9}},
+ CellLabel->"In[25]:=",ExpressionUUID->"6cce459a-eede-4dbd-bcdd-4c25eeec4391"],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{{3.823638287922542*^9, 3.823638292688943*^9}, 
+   3.823773365765876*^9, {3.823776985075489*^9, 3.823776993117457*^9}, 
+   3.823791803697898*^9, 3.8237930256992145`*^9, 3.823793156935686*^9, 
+   3.823793229251212*^9},
+ CellLabel->"Out[25]=",ExpressionUUID->"53cc86dd-71d9-4572-abb1-d5ca535b7ac3"],
+
+Cell[BoxData["2"], "Output",
+ CellChangeTimes->{{3.823638287922542*^9, 3.823638292688943*^9}, 
+   3.823773365765876*^9, {3.823776985075489*^9, 3.823776993117457*^9}, 
+   3.823791803697898*^9, 3.8237930256992145`*^9, 3.823793156935686*^9, 
+   3.823793229256199*^9},
+ CellLabel->"Out[26]=",ExpressionUUID->"775db947-bd5b-4428-a2be-4ae12552c5eb"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Polynomial Identities Implementation", "Section",
+ CellChangeTimes->{{3.8237919509689817`*^9, 3.823791998211011*^9}, {
+  3.8237935416324067`*^9, 
+  3.8237935439790964`*^9}},ExpressionUUID->"22ab2e24-98d5-4f25-b921-\
+1313e2f4333e"],
+
+Cell[TextData[Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{
+   "One", " ", "thing", " ", "we", " ", "have", " ", "seen", " ", "in", " ", 
+    "class", " ", "is", " ", "generating", " ", "polynomial", " ", 
+    "identities", " ", "by", " ", "solving", " ", "systems", " ", "of", " ", 
+    RowBox[{"equations", " ", ".", " ", "Therefore"}], "  ", "I", " ", "am", "  ",
+     "going", " ", "to", " ", "do", " ", "that", " ", "and", " ", "try", " ", 
+    "to", " ", "see", " ", "if", " ", "I", " ", "can", " ", "directly", " ", 
+    "conjencture", " ", "and", " ", "verify", " ", "the", " ", "identity", 
+    " ", "involving", " ", 
+    SubscriptBox["P", 
+     RowBox[{"7", "n"}]], " ", "and", " ", 
+    RowBox[{
+     SubscriptBox["P", 
+      RowBox[{"9", "n"}]], ".", " ", "Suppose"}], " ", "I", " ", "want", " ", 
+    "to", " ", "find", " ", 
+    FormBox["a",
+     TraditionalForm]}], "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[
+   RowBox[{
+    RowBox[{
+     FormBox[
+      RowBox[{"b", ",", " ", 
+       RowBox[{"e", " ", "and", " ", "d"}]}],
+      TraditionalForm], " ", "such", " ", "that", " ", 
+     FormBox[
+      RowBox[{
+       SubscriptBox["P", 
+        RowBox[{"7", "n"}]], "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"a", "(", 
+          SubscriptBox["P", "n"], ")"}], "7"], "+", 
+        SuperscriptBox[
+         RowBox[{"b", "(", 
+          SubscriptBox["P", "n"], ")"}], "5"], "+", 
+        SuperscriptBox[
+         RowBox[{"e", "(", 
+          SubscriptBox["P", "n"], ")"}], "3"]}]}],
+      TraditionalForm]}], "+", 
+    RowBox[{"D", 
+     RowBox[{
+      RowBox[{"(", 
+       SubscriptBox["P", "n"], ")"}], ".", " ", 
+      RowBox[{"Let", "'"}]}], "s", " ", "write", " ", "equations", " ", "for",
+      " ", 
+     FormBox[
+      RowBox[{"n", "=", "2"}],
+      TraditionalForm]}]}], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[
+   FormBox[
+    RowBox[{"n", "=", "4"}],
+    TraditionalForm], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[
+   RowBox[{
+    FormBox[
+     RowBox[{"n", "=", "6"}],
+     TraditionalForm], " ", "and", " ", 
+    FormBox[
+     RowBox[{"n", "=", "8"}],
+     TraditionalForm]}], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[" ", "Text"], 
+  RowBox[{
+   StyleBox[
+    RowBox[{
+    "and", " ", "solve", " ", "for", " ", "all", " ", "of", " ", "the", " ", 
+     "variables", " ", "mentioned", " ", 
+     RowBox[{"earlier", ".", " ", "I"}], " ", "should", " ", "note", " ", 
+     "that", " ", "the", " ", "values", " ", "of", " ", "n", " ", "I", " ", 
+     "have", " ", "chosen", " ", "are", " ", "even", " ", "numbers", " ", 
+     "but", " ", "if", " ", "I", " ", "had", " ", "chosen", " ", "values", 
+     " ", "of", " ", "odd", " ", "numbers", " ", "later", " ", "on", " ", 
+     "the", " ", "project", " ", "to", " ", "verify", " ", "the", " ", 
+     "identity", " ", "we", " ", "need", " ", "to", " ", "insert"}], "Text"], 
+   StyleBox[" ", "Text"], 
+   StyleBox["-", "Text"], 
+   SuperscriptBox[
+    StyleBox["1", "Text"], 
+    RowBox[{"n", " "}]]}]}]],
+ CellChangeTimes->{{3.8236250383008423`*^9, 3.82362505691992*^9}, {
+  3.8236271466476855`*^9, 3.8236271536000957`*^9}, {3.8237735004781446`*^9, 
+  3.823773526273242*^9}, {3.823773754675394*^9, 3.8237737691936574`*^9}, {
+  3.8237758648144083`*^9, 3.823775874100525*^9}, {3.823792002948295*^9, 
+  3.8237921123464675`*^9}, {3.823792164179451*^9, 3.82379226787228*^9}, {
+  3.8237928008890486`*^9, 3.8237928420694675`*^9}, {3.8237928747726583`*^9, 
+  3.8237929079453096`*^9}, {3.8237930992196264`*^9, 
+  3.8237931032216215`*^9}},ExpressionUUID->"e6014a9a-5c11-44e1-add0-\
+403f99ab4acd"]], "Text",
+ CellChangeTimes->{{3.8236250383008423`*^9, 3.82362505691992*^9}, {
+  3.8236271466476855`*^9, 3.8236271536000957`*^9}, {3.8237735004781446`*^9, 
+  3.823773526273242*^9}, {3.823773754675394*^9, 3.8237737691936574`*^9}, {
+  3.8237758648144083`*^9, 3.823775874100525*^9}, {3.823792002948295*^9, 
+  3.8237921123464675`*^9}, {3.823792164179451*^9, 3.82379226787228*^9}, {
+  3.8237928008890486`*^9, 3.8237928420694675`*^9}, {3.8237928747726583`*^9, 
+  3.8237929079453096`*^9}, {3.8237930992196264`*^9, 3.8237931032216215`*^9}, {
+  3.823793290325586*^9, 
+  3.8237932924279623`*^9}},ExpressionUUID->"58b267a6-ccd1-49d4-87b7-\
+55d13ce5d292"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eq1", "=", 
+   RowBox[{
+    RowBox[{"p", "[", 
+     RowBox[{"7", "*", "2"}], "]"}], "\[Equal]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "2", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"b", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "2", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"e", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "2", "]"}], ")"}], "^", "3"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"d", "*", 
+       RowBox[{"(", 
+        RowBox[{"p", "[", "2", "]"}], ")"}]}], " ", ")"}]}]}]}], ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"n", "=", 
+    RowBox[{"2", " ", "equation"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"eq2", "=", 
+   RowBox[{
+    RowBox[{"p", "[", 
+     RowBox[{"7", "*", "4"}], "]"}], "\[Equal]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "4", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"b", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "4", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"e", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "4", "]"}], ")"}], "^", "3"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"d", "*", 
+       RowBox[{"(", 
+        RowBox[{"p", "[", "4", "]"}], ")"}]}], " ", ")"}]}]}]}], " ", ";", 
+  RowBox[{"(*", " ", 
+   RowBox[{"n", "=", 
+    RowBox[{"4", " ", "equation"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"eq3", "=", 
+   RowBox[{
+    RowBox[{"p", "[", 
+     RowBox[{"7", "*", "6"}], "]"}], "\[Equal]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "6", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"b", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "6", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"e", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "6", "]"}], ")"}], "^", "3"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"d", "*", 
+       RowBox[{"(", 
+        RowBox[{"p", "[", "6", "]"}], ")"}]}], " ", ")"}]}]}]}], ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"n", "=", 
+    RowBox[{"6", " ", "equation"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"eq4", "=", 
+   RowBox[{
+    RowBox[{"p", "[", 
+     RowBox[{"7", "*", "8"}], "]"}], "\[Equal]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "8", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"b", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "8", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"e", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "8", "]"}], ")"}], "^", "3"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"d", "*", 
+       RowBox[{"(", 
+        RowBox[{"p", "[", "8", "]"}], ")"}]}], " ", ")"}]}]}]}], " ", ";", 
+  RowBox[{"(*", " ", 
+   RowBox[{"n", "=", 
+    RowBox[{"9", " ", "equation"}]}], " ", "*)"}]}]], "Input",
+ CellChangeTimes->{{3.8236248552419386`*^9, 3.823624874628253*^9}, {
+  3.823640003980074*^9, 3.823640013552306*^9}, {3.8236401583609977`*^9, 
+  3.823640184464005*^9}, {3.8237227007606335`*^9, 3.823722708067734*^9}, {
+  3.823722749251149*^9, 3.823722755111884*^9}, {3.823773208142721*^9, 
+  3.823773361510256*^9}, {3.823773578975976*^9, 3.823773580229624*^9}, {
+  3.823774712952404*^9, 3.823774791869707*^9}, {3.823774890291873*^9, 
+  3.8237748969879303`*^9}, {3.823775883954574*^9, 3.8237759298932543`*^9}, {
+  3.8237770154846463`*^9, 3.8237770257985744`*^9}, {3.8237922738935165`*^9, 
+  3.8237922927338724`*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"bac52e1e-d8c7-47de-9add-67abe96d2357"],
+
+Cell[TextData[{
+ "Now that I have all of the equations I need it\[CloseCurlyQuote]s time to \
+utilize the Solve function in Mathematica. What this function does as the \
+name suggests is provide a specific value for all of the variables a, b, e \
+and d which i will then later use to prove if the formula  ",
+ Cell[BoxData[
+  RowBox[{
+   FormBox[
+    RowBox[{
+     SubscriptBox["P", 
+      RowBox[{"7", "n"}]], "=", 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"a", "(", 
+        SubscriptBox["P", "n"], ")"}], "7"], "+", 
+      SuperscriptBox[
+       RowBox[{"b", "(", 
+        SubscriptBox["P", "n"], ")"}], "5"], "+", 
+      SuperscriptBox[
+       RowBox[{"e", "(", 
+        SubscriptBox["P", "n"], ")"}], "3"]}]}],
+    TraditionalForm], "+", 
+   RowBox[{"D", 
+    RowBox[{"(", 
+     SubscriptBox["P", "n"], ")"}]}]}]],
+  CellChangeTimes->{{3.8236250383008423`*^9, 3.82362505691992*^9}, {
+   3.8236271466476855`*^9, 3.8236271536000957`*^9}, {3.8237735004781446`*^9, 
+   3.823773526273242*^9}, {3.823773754675394*^9, 3.8237737691936574`*^9}, {
+   3.8237758648144083`*^9, 3.823775874100525*^9}, {3.823792002948295*^9, 
+   3.8237921123464675`*^9}, {3.823792164179451*^9, 3.82379226787228*^9}},
+  ExpressionUUID->"de29297d-3bc1-4019-90aa-21bebc1423be"],
+ " is really True. "
+}], "Text",
+ CellChangeTimes->{{3.8237924358192587`*^9, 
+  3.8237925414197006`*^9}},ExpressionUUID->"04499ce0-952a-45e8-af1e-\
+7369481d70bf"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"solution", "=", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"eq1", ",", "eq2", ",", " ", "eq3", ",", " ", "eq4"}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "b", ",", " ", "e", ",", " ", "d"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.823773454778939*^9, 3.8237734555548625`*^9}, {
+   3.823773585027791*^9, 3.823773585135502*^9}, {3.8237748071498194`*^9, 
+   3.823774814442281*^9}, 3.823793049229018*^9, 3.823793178717902*^9},
+ CellLabel->"In[53]:=",ExpressionUUID->"7832a60c-35da-4c2e-94c1-4df224eeb46f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"a", "\[Rule]", "512"}], ",", 
+    RowBox[{"b", "\[Rule]", "448"}], ",", 
+    RowBox[{"e", "\[Rule]", "112"}], ",", 
+    RowBox[{"d", "\[Rule]", "7"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.823796576202442*^9},
+ CellLabel->"Out[53]=",ExpressionUUID->"ebb02409-e4da-434e-a87d-3706639246c8"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Next we need to calculate both sides of the equation ",
+ Cell[BoxData[
+  RowBox[{
+   FormBox[
+    RowBox[{
+     SubscriptBox["P", 
+      RowBox[{"7", "n"}]], "=", 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"a", "(", 
+        SubscriptBox["P", "n"], ")"}], "7"], "+", 
+      SuperscriptBox[
+       RowBox[{"b", "(", 
+        SubscriptBox["P", "n"], ")"}], "5"], "+", 
+      SuperscriptBox[
+       RowBox[{"e", "(", 
+        SubscriptBox["P", "n"], ")"}], "3"]}]}],
+    TraditionalForm], "+", 
+   RowBox[{"D", 
+    RowBox[{"(", 
+     SubscriptBox["P", "n"], ")"}]}]}]],
+  CellChangeTimes->{{3.8236250383008423`*^9, 3.82362505691992*^9}, {
+   3.8236271466476855`*^9, 3.8236271536000957`*^9}, {3.8237735004781446`*^9, 
+   3.823773526273242*^9}, {3.823773754675394*^9, 3.8237737691936574`*^9}, {
+   3.8237758648144083`*^9, 3.823775874100525*^9}, {3.823792002948295*^9, 
+   3.8237921123464675`*^9}, {3.823792164179451*^9, 3.82379226787228*^9}},
+  ExpressionUUID->"1ac5a0e1-2395-492a-ac78-c0aac0a2cf52"],
+ " but this time since I am going to plug in the values of the variables I \
+found in the earlier code chunk. If the boolean operator that compares the \
+left hand side of the equation to that of the right hand side returns true we \
+can form a conjuncture that the identity holds for lots of even values of n"
+}], "Text",
+ CellChangeTimes->{{3.8237925701327796`*^9, 3.823792694860508*^9}, {
+  3.823792931987051*^9, 
+  3.823792946760398*^9}},ExpressionUUID->"567350b3-0ab2-4ea1-a512-\
+5ff10a862d33"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lhs", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"7", "*", "n"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "500", ",", " ", "2"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rhs", "=", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"a", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "7"}]}], "+", 
+       RowBox[{"b", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "5"}]}], "+", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "3"}]}], "+", 
+       RowBox[{"d", "*", 
+        RowBox[{"(", 
+         RowBox[{"p", "[", "n", "]"}], ")"}]}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "0", ",", "500", ",", " ", "2"}], "}"}]}], "]"}], "/.", 
+    RowBox[{
+    "solution", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8236269972573395`*^9, 3.8236270071721635`*^9}, {
+  3.823627092246462*^9, 3.8236270976582794`*^9}, {3.8236402946948595`*^9, 
+  3.8236402968178835`*^9}, {3.823640957287629*^9, 3.8236409692733326`*^9}, {
+  3.823722725585125*^9, 3.8237227699535627`*^9}, {3.8237734193691177`*^9, 
+  3.8237734646966853`*^9}, {3.823773587834285*^9, 3.823773588027767*^9}, {
+  3.8237748556983128`*^9, 3.823774868272126*^9}, {3.8237749390201035`*^9, 
+  3.8237749984188557`*^9}, {3.8237753919427557`*^9, 3.8237754117350645`*^9}, {
+  3.823775941911113*^9, 3.8237760009687877`*^9}, {3.823792950073535*^9, 
+  3.8237929528670316`*^9}, {3.82379318270228*^9, 3.8237932145537033`*^9}, {
+  3.823796565633129*^9, 3.8237965681503735`*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"76c7e5ff-3640-4933-af15-86c9d0d7153e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"lhs", "\[Equal]", "rhs"}]], "Input",
+ CellChangeTimes->{3.8237735996807833`*^9, 3.823774824245413*^9},
+ CellLabel->"In[56]:=",ExpressionUUID->"b8ea9bc4-bbff-494e-bd5e-a1058f485544"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{
+  3.823774824728977*^9, {3.8237748613944864`*^9, 3.8237748714646015`*^9}, 
+   3.8237749055759964`*^9, {3.8237749549466977`*^9, 3.8237750017471743`*^9}, 
+   3.823775416648245*^9, 3.823775672329283*^9, 3.823776004871351*^9, 
+   3.8237932080870113`*^9, 3.8237932475858707`*^9, {3.823796571636995*^9, 
+   3.8237965806072426`*^9}},
+ CellLabel->"Out[56]=",ExpressionUUID->"6d9f530d-9310-4fcd-a29d-97f2843241fc"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lhs", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"7", "n"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "500"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rhs", "=", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"a", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "7"}]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"-", "1"}], ")"}], "^", 
+        RowBox[{"(", 
+         RowBox[{"n", "*", "b", "*", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"p", "[", "n", "]"}], ")"}], "^", "5"}]}], ")"}]}], "+", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "3"}]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"-", "1"}], ")"}], "^", 
+        RowBox[{"(", 
+         RowBox[{"n", "*", "d", "*", 
+          RowBox[{"p", "[", "n", "]"}]}], ")"}]}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "0", ",", "500"}], "}"}]}], "]"}], "/.", 
+    RowBox[{
+    "solution", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.8237971799211493`*^9, 
+  3.8237973611611786`*^9}},ExpressionUUID->"ebc4f4e5-50aa-4a54-a620-\
+712dc6b2dd19"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"lhs", "\[Equal]", "rhs"}]], "Input",
+ CellLabel->"In[71]:=",ExpressionUUID->"107bbdbd-4a93-4891-9ebf-aa96661afcca"],
+
+Cell[BoxData["False"], "Output",
+ CellChangeTimes->{
+  3.8237972429645243`*^9, {3.8237973041038527`*^9, 3.823797324243511*^9}},
+ CellLabel->"Out[71]=",ExpressionUUID->"ab074533-2f04-463c-b32d-43f1b138129f"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{
+   "Now", " ", "that", " ", "we", " ", "have", " ", "seen", " ", "that", " ", 
+    "I", " ", "can", " ", "directly", " ", "conjencture", " ", "and", " ", 
+    "verify", " ", "the", " ", "identity", " ", "involving", " ", 
+    SubscriptBox["P", 
+     RowBox[{"7", "n"}]], " ", "Let", " ", "us", " ", "try", " ", "and", " ", 
+    "do", " ", "the", " ", "same", " ", "thing", " ", "with", " ", 
+    RowBox[{
+     SubscriptBox["P", 
+      RowBox[{"9", "n"}]], ".", " ", "Suppose"}], " ", "I", " ", "want", " ", 
+    "to", " ", "find", " ", 
+    FormBox["a",
+     TraditionalForm]}], "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[
+   FormBox[
+    RowBox[{"b", ",", " ", "e", " ", ",", " ", "d"}],
+    TraditionalForm], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[
+   RowBox[{
+    RowBox[{"f", " ", "such", " ", "that", " ", 
+     FormBox[
+      RowBox[{
+       SubscriptBox["P", 
+        RowBox[{"9", "n"}]], "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"a", "(", 
+          SubscriptBox["P", "n"], ")"}], "9"], "+", 
+        SuperscriptBox[
+         RowBox[{"b", "(", 
+          SubscriptBox["P", "n"], ")"}], "7"], "+", 
+        SuperscriptBox[
+         RowBox[{"e", "(", 
+          SubscriptBox["P", "n"], ")"}], "5"]}]}],
+      TraditionalForm]}], "+", 
+    RowBox[{"d", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       SubscriptBox["P", "n"], ")"}], "5"]}], "+", " ", 
+    RowBox[{"f", 
+     RowBox[{
+      RowBox[{"(", 
+       SubscriptBox["P", "n"], ")"}], ".", " ", 
+      RowBox[{"Let", "'"}]}], "s", " ", "write", " ", "equations", " ", "for",
+      " ", 
+     FormBox[
+      RowBox[{"n", "=", "2"}],
+      TraditionalForm]}]}], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[
+   FormBox[
+    RowBox[{"n", "=", "4"}],
+    TraditionalForm], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[
+   FormBox[
+    RowBox[{"n", "=", "6"}],
+    TraditionalForm], "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[" ", "Text"], 
+  StyleBox[
+   FormBox[
+    RowBox[{"n", "=", 
+     RowBox[{
+      RowBox[{"8", " ", "and", " ", "n"}], " ", "=", " ", "10"}]}],
+    TraditionalForm], "Text"], 
+  StyleBox[",", "Text"], 
+  StyleBox[" ", "Text"], 
+  RowBox[{
+   StyleBox[
+    RowBox[{
+    "and", " ", "solve", " ", "for", " ", "all", " ", "of", " ", "the", " ", 
+     "variables", " ", "mentioned", " ", 
+     RowBox[{"earlier", ".", " ", "I"}], " ", "should", " ", "note", " ", 
+     "that", " ", "the", " ", "values", " ", "of", " ", "n", " ", "I", " ", 
+     "have", " ", "chosen", " ", "are", " ", "even", " ", "numbers", " ", 
+     "but", " ", "if", " ", "I", " ", "had", " ", "chosen", " ", "values", 
+     " ", "of", " ", "odd", " ", "numbers", " ", "later", " ", "on", " ", 
+     "the", " ", "project", " ", "to", " ", "verify", " ", "the", " ", 
+     "identity", " ", "we", " ", "need", " ", "to", " ", "insert"}], "Text"], 
+   StyleBox[" ", "Text"], 
+   StyleBox["-", "Text"], 
+   SuperscriptBox[
+    StyleBox["1", "Text"], 
+    RowBox[{"n", " "}]]}]}]], "Text",
+ CellChangeTimes->{{3.82379328356155*^9, 
+  3.823793429480378*^9}},ExpressionUUID->"d679d23d-9b9c-4fe0-b794-\
+8b259a83cb38"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"eq11", "=", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"9", "*", "2"}], "]"}], "\[Equal]", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "2", "]"}], ")"}], "^", "9"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"b", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "2", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "2", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"d", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "2", "]"}], ")"}], "^", "3"}]}], " ", ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"f", "*", 
+        RowBox[{"(", 
+         RowBox[{"p", "[", "2", "]"}], ")"}]}], ")"}]}]}]}], ";", " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{"n", "=", 
+     RowBox[{"3", " ", "equation"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"eq21", "=", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"9", "*", "4"}], "]"}], "\[Equal]", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "4", "]"}], ")"}], "^", "9"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"b", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "4", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "4", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"d", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "4", "]"}], ")"}], "^", "3"}]}], " ", ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"f", "*", 
+        RowBox[{"(", 
+         RowBox[{"p", "[", "4", "]"}], ")"}]}], ")"}]}]}]}], ";", 
+   RowBox[{"(*", " ", 
+    RowBox[{"n", "=", 
+     RowBox[{"5", " ", "equation"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"eq31", "=", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"9", "*", "6"}], "]"}], "\[Equal]", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "6", "]"}], ")"}], "^", "9"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"b", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "6", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "6", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"d", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "6", "]"}], ")"}], "^", "3"}]}], " ", ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"f", "*", 
+        RowBox[{"(", 
+         RowBox[{"p", "[", "6", "]"}], ")"}]}], ")"}]}]}]}], " ", ";", 
+   RowBox[{"(*", " ", 
+    RowBox[{"n", "=", 
+     RowBox[{"7", " ", "equation"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"eq41", "=", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"9", "*", "8"}], "]"}], "\[Equal]", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"a", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "8", "]"}], ")"}], "^", "9"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"b", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "8", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "8", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"d", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "8", "]"}], ")"}], "^", "3"}]}], " ", ")"}], "+", 
+      RowBox[{"(", 
+       RowBox[{"f", "*", 
+        RowBox[{"(", 
+         RowBox[{"p", "[", "8", "]"}], ")"}]}], ")"}]}]}]}], ";"}], 
+  RowBox[{"(*", " ", 
+   RowBox[{"n", "=", 
+    RowBox[{"9", " ", "equation"}]}], " ", "*)"}], 
+  " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"eq51", "=", 
+   RowBox[{
+    RowBox[{"p", "[", 
+     RowBox[{"9", "*", "10"}], "]"}], "\[Equal]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "10", "]"}], ")"}], "^", "9"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"b", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "10", "]"}], ")"}], "^", "7"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"e", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "10", "]"}], ")"}], "^", "5"}]}], ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"d", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"p", "[", "10", "]"}], ")"}], "^", "3"}]}], " ", ")"}], "+", 
+     RowBox[{"(", 
+      RowBox[{"f", "*", 
+       RowBox[{"(", 
+        RowBox[{"p", "[", "10", "]"}], ")"}]}], ")"}]}]}]}], ";", 
+  RowBox[{"(*", " ", 
+   RowBox[{"n", "=", 
+    RowBox[{"11", " ", "equation"}]}], " ", "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.8237723495255303`*^9, 3.823772361055276*^9}, {
+   3.823775047892294*^9, 3.8237753124361515`*^9}, {3.8237754370443344`*^9, 
+   3.823775453993758*^9}, {3.8237761527120056`*^9, 3.823776215098283*^9}, 
+   3.8237771516212244`*^9},
+ CellLabel->"In[33]:=",ExpressionUUID->"e59d7022-ec21-46be-9a79-a5303247d07f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"solution", "=", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "eq11", ",", " ", "eq21", ",", " ", "eq31", ",", "eq41", ",", " ", 
+      "eq51"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "b", ",", " ", "e", ",", " ", "d", ",", " ", "f"}], 
+     "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.8237723727212257`*^9, 3.8237723817630205`*^9}, {
+  3.8237753255833683`*^9, 3.823775351629185*^9}},
+ CellLabel->"In[35]:=",ExpressionUUID->"b3325d60-6b3d-4298-b19e-45d768469b65"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"a", "\[Rule]", "4096"}], ",", 
+    RowBox[{"b", "\[Rule]", "4608"}], ",", 
+    RowBox[{"e", "\[Rule]", "1728"}], ",", 
+    RowBox[{"d", "\[Rule]", "240"}], ",", 
+    RowBox[{"f", "\[Rule]", "9"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.8237723701720085`*^9, 3.8237723839732533`*^9}, 
+   3.82377532025504*^9, 3.823775353330145*^9, 3.823775459264658*^9, 
+   3.823776222921589*^9, 3.82379345093566*^9},
+ CellLabel->"Out[35]=",ExpressionUUID->"81135e2f-224e-4387-a9dd-0716cdb143e4"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"lhs", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"p", "[", 
+      RowBox[{"9", "n"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "100", ",", " ", "2"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rhs", "=", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"a", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "9"}]}], "+", 
+       RowBox[{"b", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "7"}]}], "+", 
+       RowBox[{"e", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "5"}]}], "+", 
+       RowBox[{"d", "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", "n", "]"}], ")"}], "^", "3"}]}], "+", 
+       RowBox[{"f", "*", 
+        RowBox[{"(", 
+         RowBox[{"p", "[", "n", "]"}], ")"}]}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"n", ",", "0", ",", "100", ",", " ", "2"}], "}"}]}], "]"}], "/.", 
+    RowBox[{
+    "solution", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.823775469856368*^9, 3.8237756169348545`*^9}},
+ CellLabel->"In[36]:=",ExpressionUUID->"044161cd-cc64-4072-b7a6-40da49c91dba"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"lhs", "\[Equal]", "rhs"}]], "Input",
+ CellLabel->
+  "In[249]:=",ExpressionUUID->"dfb32f70-c897-4043-accd-19d2926abe81"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{
+  3.8237724005016932`*^9, {3.8237755524325905`*^9, 3.8237755637044897`*^9}, 
+   3.8237756211777153`*^9, 3.823776236616122*^9},
+ CellLabel->
+  "Out[249]=",ExpressionUUID->"48ad2c01-561f-4904-8b2d-8772605eaadf"]
+}, Open  ]],
+
+Cell[TextData[{
+ "From the above exploration I can can conjuncture the idea that for any ",
+ Cell[BoxData[
+  RowBox[{
+   FormBox[
+    RowBox[{
+     SubscriptBox["P", "mn"], "=", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"a", "(", 
+         SubscriptBox["P", "n"], ")"}], "m"], "+", 
+       SuperscriptBox[
+        RowBox[{"b", "(", 
+         SubscriptBox["P", "n"], ")"}], 
+        RowBox[{"m", "-", "2"}]]}], "..."}]}],
+    TraditionalForm], "D", 
+   RowBox[{"(", 
+    SubscriptBox["P", "n"], ")"}]}]],
+  CellChangeTimes->{{3.8236250383008423`*^9, 3.82362505691992*^9}, {
+   3.8236271466476855`*^9, 3.8236271536000957`*^9}, {3.8237735004781446`*^9, 
+   3.823773526273242*^9}, {3.823773754675394*^9, 3.8237737691936574`*^9}, {
+   3.8237758648144083`*^9, 3.823775874100525*^9}, {3.823792002948295*^9, 
+   3.8237921123464675`*^9}, {3.823792164179451*^9, 3.82379226787228*^9}},
+  ExpressionUUID->"bff15fdc-40ea-4150-b329-2a8464cd22ac"],
+ "where m is an integer. "
+}], "Text",
+ CellChangeTimes->{{3.8237935572934093`*^9, 3.823793732303341*^9}, {
+  3.823796795597084*^9, 
+  3.82379679584186*^9}},ExpressionUUID->"b9cab257-2cbf-4d9d-a9e9-\
+5c571e33687f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Problem Statement - 2", "Section",
+ CellChangeTimes->{{3.8237828857612925`*^9, 
+  3.8237829056513987`*^9}},ExpressionUUID->"7322d0ae-3405-4ad5-b105-\
+13479f19ecc4"],
+
+Cell["\<\
+In this part of the assignment I plan to provide computational evidence to \
+support two of the theorems in the paper \[OpenCurlyDoubleQuote]On Polynomial \
+Identities for Recursive Sequences\[CloseCurlyDoubleQuote]. I chose \
+proposition 2 and theorum 2. Therefore let\[CloseCurlyQuote]s take a look at \
+them.\
+\>", "Text",
+ CellChangeTimes->{{3.823793774656722*^9, 
+  3.8237938834293423`*^9}},ExpressionUUID->"acbdc684-5bad-49f5-8ad7-\
+03d7d5c9a8bf"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation - Melham\[CloseCurlyQuote]s Sum", "Section",
+ CellChangeTimes->{{3.8237941989189997`*^9, 3.823794208823022*^9}, {
+  3.8237944896386795`*^9, 
+  3.823794518018368*^9}},ExpressionUUID->"0ca31b0c-d679-43ee-9e02-\
+22f2a8773562"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Melham\[CloseCurlyQuote]s sum for the Pell sequence and the Pell Lucas \
+sequence\
+\>", "Subsection",
+ CellChangeTimes->{{3.8237730895371714`*^9, 3.823773097973008*^9}, {
+  3.8237927585789113`*^9, 3.8237927676357894`*^9}, {3.8237939446524525`*^9, 
+  3.823793944741068*^9}},ExpressionUUID->"a02dc934-c877-4300-97ab-\
+2c32ce3cadf6"],
+
+Cell["\<\
+This particular proposition states that, Twice the sum of the Pell numbers \
+having even indexes from 2 to n is equal to the (2n+1)-st Pell number \
+diminished by 1. I am going to try to computationally prove that this \
+statement really stands. \
+\>", "Text",
+ CellChangeTimes->{{3.823772502008226*^9, 3.8237725176688795`*^9}, {
+  3.823772553402289*^9, 3.8237725541223283`*^9}, {3.823777532894626*^9, 
+  3.823777533404399*^9}, {3.8237939505219083`*^9, 3.823794003945202*^9}, {
+  3.823794268907333*^9, 
+  3.8237942746972113`*^9}},ExpressionUUID->"09420479-8c6e-43fa-98f4-\
+5a5daed749cb"],
+
+Cell["\<\
+First thing I will do is declare a function that takes in a number n which \
+will be the number of sequences I want to enter into my pell sequence \
+function defined above. Then I will set the sum, to 0 because as the Do loop \
+runs the sum increases simultaneously. I will then calculate the right hand \
+side of the equation that states that P2n+1 and the left hand side of the \
+which is the 1 + 2*Sum[p[2k]].\
+\>", "Text",
+ CellChangeTimes->{{3.8237940233345823`*^9, 3.823794152591166*^9}, {
+  3.823794232133136*^9, 
+  3.823794263704356*^9}},ExpressionUUID->"b32f0c34-8b46-4614-bc34-\
+8543e06350c6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"melham", "[", "n_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"sum", " ", "=", " ", "0"}], ",", " ", "lhs", ",", " ", "rhs"}],
+      "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Do", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"sum", " ", "+=", "  ", 
+         RowBox[{"p", "[", 
+          RowBox[{"2", "i"}], "]"}]}], ";"}], "\[IndentingNewLine]", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", "n"}], "}"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"lhs", " ", "=", " ", 
+      RowBox[{"1", "+", 
+       RowBox[{"2", "*", "sum"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"rhs", " ", "=", "  ", 
+      RowBox[{"p", "[", 
+       RowBox[{
+        RowBox[{"2", "*", "n"}], "+", "1"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"lhs", " ", "\[Equal]", " ", "rhs"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.8237727984800835`*^9, 3.8237728090762653`*^9}, {
+  3.823772860031909*^9, 3.8237728912555037`*^9}, {3.823772946469694*^9, 
+  3.823773028915905*^9}, {3.823773131978304*^9, 3.823773133967018*^9}},
+ CellLabel->"In[39]:=",ExpressionUUID->"ad385dc2-682c-4354-a16e-7b307dc5b3ef"],
+
+Cell["\<\
+Now let's check if this proposition stands for multiple values of n, because \
+we want to make this computational inquiry worth it let us say n = 1000  \
+\>", "Text",
+ CellChangeTimes->{{3.823794285665468*^9, 
+  3.8237943450505004`*^9}},ExpressionUUID->"a090e347-b737-41d0-acfc-\
+f69d9c245591"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"melham", "[", "1000", "]"}]], "Input",
+ CellChangeTimes->{{3.823773034090401*^9, 3.82377306289869*^9}, {
+   3.8237731363646097`*^9, 3.823773138342331*^9}, {3.823774566765504*^9, 
+   3.8237745784124813`*^9}, {3.823794280948209*^9, 3.82379428221233*^9}, 
+   3.8237943480280476`*^9},
+ CellLabel->"In[42]:=",ExpressionUUID->"28076919-8aef-402a-bfa6-d99c7b3b6f09"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{{3.8237730484673185`*^9, 3.823773063781282*^9}, 
+   3.823773141206624*^9, {3.823774569076833*^9, 3.823774580616269*^9}, 
+   3.823775683149914*^9, 3.823794013240388*^9, 3.8237942835319242`*^9, 
+   3.823794349047083*^9},
+ CellLabel->"Out[42]=",ExpressionUUID->"d60e6637-7548-4d7f-b2d8-d5f954518c79"]
+}, Open  ]],
+
+Cell["\<\
+For the above computational exploration I can conjuncture that the formula 1 \
++ 2*Sum[p[2k]] = P2n+1 is true\
+\>", "Text",
+ CellChangeTimes->{{3.823794359937169*^9, 
+  3.8237944190336885`*^9}},ExpressionUUID->"00021a95-7008-45b2-8fa4-\
+14460d91ef14"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Implementation - Theorem 2", "Section",
+ CellChangeTimes->{{3.823794495772272*^9, 
+  3.823794521655792*^9}},ExpressionUUID->"ca5966cd-63ec-4c41-8d40-\
+215848b37b47"],
+
+Cell["\<\
+First thing I will do is very similar to the previous code chunk. We first \
+declare a function that takes in a number n which will be the number of \
+sequences I want to enter into my pell sequence function defined above. Then \
+I will set the 2 sums in the formula, to 0 because as the Sum function from \
+Mathematica runs the sum increases simultaneously. I will then calculate the \
+right hand side of the equation and the left hand side of the equation and \
+compare them with a boolean operator.\
+\>", "Text",
+ CellChangeTimes->{{3.8237945613900146`*^9, 3.8237946134897356`*^9}, {
+  3.823794728974245*^9, 
+  3.8237947774876804`*^9}},ExpressionUUID->"f9232635-7ac3-4602-aa41-\
+3c0c2fa1aca7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"verifyTheor2", "[", 
+   RowBox[{"n_", ",", "m_", ",", "k_", ",", "j_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"lhs", ",", "rhs"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"lhs", "=", 
+      RowBox[{"Sum", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "[", 
+           RowBox[{"2", " ", "k"}], "]"}], ")"}], "^", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", "*", "m"}], "+", "1"}], ")"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"k", ",", "1", ",", "n"}], "}"}]}], "]"}]}], ";", 
+     RowBox[{"rhs", "=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{"2", "^", 
+           RowBox[{"(", 
+            RowBox[{"3", " ", "m"}], ")"}]}], ")"}]}], ")"}], "*", 
+       RowBox[{"Sum", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"-", "1"}], ")"}], "^", "j"}], ")"}], "/", 
+            RowBox[{"(", 
+             RowBox[{"q", "[", 
+              RowBox[{
+               RowBox[{"2", "*", "m"}], "+", "1", "-", 
+               RowBox[{"2", "*", "j"}]}], "]"}], ")"}]}], ")"}], "*", 
+          RowBox[{"Binomial", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"2", "*", "m"}], "+", "1"}], ",", "j"}], "]"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"p", "[", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"2", "*", "m"}], "+", "1", "-", 
+                RowBox[{"2", "*", "j"}]}], ")"}], "*", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"2", "*", "n"}], "+", "1"}], ")"}]}], "]"}], "-", 
+            RowBox[{"p", "[", 
+             RowBox[{
+              RowBox[{"2", "*", "m"}], "+", "1", "-", 
+              RowBox[{"2", "*", "j"}]}], "]"}]}], ")"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "0", ",", "m"}], "}"}]}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"lhs", "\[Equal]", "rhs"}]}]}], " ", "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.823774618721183*^9, 3.8237746359198837`*^9}, {
+   3.823775700504693*^9, 3.823775780155239*^9}, 3.8237758420376368`*^9, {
+   3.823777235720131*^9, 3.823777268620902*^9}, {3.823777321623704*^9, 
+   3.8237773225105333`*^9}, {3.8237774964777308`*^9, 3.8237774971560574`*^9}},
+ CellLabel->"In[44]:=",ExpressionUUID->"a670442d-6208-4a8c-82c9-e07694555947"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"verifyTheor2", "[", 
+   RowBox[{"45", ",", " ", "45", ",", " ", "k", ",", " ", "j"}], "]"}], 
+  " "}]], "Input",
+ CellChangeTimes->{{3.8237757939842615`*^9, 3.823775816052753*^9}, 
+   3.8237911021967554`*^9, {3.82379445124286*^9, 3.8237944545751104`*^9}, {
+   3.823795916244046*^9, 3.8237959273295565`*^9}, {3.8237961620511456`*^9, 
+   3.8237961717998943`*^9}},
+ CellLabel->"In[49]:=",ExpressionUUID->"68d37f05-f315-4c86-bae1-d1dc5c6692b9"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{{3.823775798407423*^9, 3.823775843752017*^9}, 
+   3.8237772728256617`*^9, 3.8237773288414717`*^9, {3.823794443916563*^9, 
+   3.8237944567496862`*^9}, 3.823796047027045*^9, 3.823796109127101*^9, {
+   3.823796166226429*^9, 3.82379617312689*^9}},
+ CellLabel->"Out[49]=",ExpressionUUID->"01fb6896-57d6-4cb9-bae2-1c1a246544a5"]
+}, Open  ]],
+
+Cell["\<\
+For the above computational exploration I can conjuncture that the formula \
+mentioned in theorem 2 is true\
+\>", "Text",
+ CellChangeTimes->{{3.823794788383731*^9, 
+  3.8237948087622385`*^9}},ExpressionUUID->"967c0406-8e31-490c-accc-\
+cac951d6652c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Conclusion and Conjunctures", "Section",
+ CellChangeTimes->{{3.82379491446754*^9, 3.823794919771312*^9}, 
+   3.823795052585719*^9},ExpressionUUID->"45f289e0-5b35-47d2-a4ab-\
+3306c81cbbf3"],
+
+Cell[TextData[{
+ "The main purpose of this project was to continue the exploration of pell \
+and Lucas numbers as described in the paper \[OpenCurlyDoubleQuote]On \
+Polynomial identities for recursive sequences\[CloseCurlyDoubleQuote], First \
+thing I did was mainly divide the project into two the first part of the \
+project was to generate at-least 2 polynomial identities similar to those \
+described in proposition 1. I was able to generate the polynomial identities \
+for ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{
+    SubscriptBox["P", 
+     RowBox[{"7", "n"}]], " ", "and", " ", 
+    SubscriptBox["P", 
+     RowBox[{"9", "n"}]]}], "Text"]],
+  CellChangeTimes->{{3.8236250383008423`*^9, 3.82362505691992*^9}, {
+   3.8236271466476855`*^9, 3.8236271536000957`*^9}, {3.8237735004781446`*^9, 
+   3.823773526273242*^9}, {3.823773754675394*^9, 3.8237737691936574`*^9}, {
+   3.8237758648144083`*^9, 3.823775874100525*^9}, {3.823792002948295*^9, 
+   3.8237921123464675`*^9}, {3.823792164179451*^9, 3.82379226787228*^9}, {
+   3.8237928008890486`*^9, 3.8237928420694675`*^9}, {3.8237928747726583`*^9, 
+   3.8237929079453096`*^9}, {3.8237930992196264`*^9, 3.8237931032216215`*^9}},
+  ExpressionUUID->"f03e57f2-c4ef-498d-824e-46668de8181d"],
+ ". My conjuncture was that proposition one of the paper was true for these \
+values, I mainly achieved this by solving systems of equations generated by \
+inserting consecutive even numbers instead of the regular n we were trying to \
+look at. Then I substituted the variables I had achieved back and tried to \
+compare the left hand side of the equation to that of the right hand side. \n\
+\nThe second part of the project was computationally verifying if theorem 2 \
+and proposition 2 of the paper were true, which I found to be TRUE as well. I \
+think these identities exists everywhere in the pell sequence and it was \
+really interesting too see all of these relations. "
+}], "Text",
+ CellChangeTimes->{{3.823794930579118*^9, 3.8237949645662556`*^9}, {
+   3.8237950548224926`*^9, 3.8237953659530654`*^9}, {3.8237954388613205`*^9, 
+   3.8237956536971693`*^9}, {3.8237964340658503`*^9, 3.823796472971266*^9}, 
+   3.8237965162571864`*^9},ExpressionUUID->"3ff8c289-01b8-4b59-977a-\
+54d6bff6119e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Limitations and Extensions ", "Section",
+ CellChangeTimes->{{3.823795663238782*^9, 
+  3.823795667361903*^9}},ExpressionUUID->"737b02c4-659d-4795-9902-\
+71aaac22accc"],
+
+Cell["\<\
+My method of creating every single equation to verify a polynomial identity \
+is not a great approach, because even at polynomial 9, There were 5 equations \
+that needed to be written out which seemed like a repetitive process. I \
+believe that there should perhaps be a way in which I can instantly create a \
+set of equations for say bigger polynomial numbers. Perhaps we can see this \
+later on in this class it could even be a mini computational project. 
+
+I also would have liked to calculate the functions verifyTheorm2 for a lot of \
+n values but this couldn\[CloseCurlyQuote]t be achieved because in the \
+beginning of the project i had created a list of PellSequences of a 10000 and \
+some of these verification functions need a whole lot more than that to be \
+able to verify for large n values. Maybe next time I can take a look at \
+increasing the the list. 
+
+Last I would have liked to be able to verify if the polynomial identity of \
+P9, for all odd numbers instead of all even numbers. \
+\>", "Text",
+ CellChangeTimes->{{3.823795694722287*^9, 3.823795907195712*^9}, {
+  3.8237959500702367`*^9, 3.8237959587572746`*^9}, {3.823796024748372*^9, 
+  3.823796155611478*^9}, {3.82379637787892*^9, 
+  3.8237964217215495`*^9}},ExpressionUUID->"318f2330-2775-473d-9f6f-\
+b8e40e0889f6"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{638, 628},
+WindowMargins->{{Automatic, -7}, {Automatic, 0}},
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 166, 3, 96, "Title",ExpressionUUID->"37bf34b4-30c2-4dea-9e95-5f7a505819be"],
+Cell[749, 27, 272, 7, 56, "Text",ExpressionUUID->"c27518c5-b24e-4ccc-b86c-89013f9bf266"],
+Cell[CellGroupData[{
+Cell[1046, 38, 168, 3, 67, "Section",ExpressionUUID->"82a361b2-8f5e-4f64-837f-1d965549e068"],
+Cell[1217, 43, 583, 14, 78, "Text",ExpressionUUID->"9451dc23-8c1c-4228-9dcc-267c8211dc69"],
+Cell[1803, 59, 934, 27, 56, "Text",ExpressionUUID->"a0068096-32bf-47e2-a3e6-3fbffbbd132a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2774, 91, 324, 5, 105, "Section",ExpressionUUID->"f875daa1-24be-4473-ae41-3c8887afc03e"],
+Cell[3101, 98, 2006, 60, 166, "Text",ExpressionUUID->"d65b2bfe-fd08-4685-aebf-398c8d8cc4cf"],
+Cell[5110, 160, 2130, 51, 238, "Input",ExpressionUUID->"d48cb868-f611-41d5-91e3-000a119bbb3a"],
+Cell[7243, 213, 469, 9, 56, "Text",ExpressionUUID->"1084a6a1-4d28-4dbd-83ed-42254ff4930b"],
+Cell[CellGroupData[{
+Cell[7737, 226, 495, 9, 48, "Input",ExpressionUUID->"7e8d3fb7-6c52-4ab5-bf99-91e0e042b29a"],
+Cell[8235, 237, 337, 7, 32, "Output",ExpressionUUID->"294f38f0-56a8-4509-ba65-30a4ee9c790f"],
+Cell[8575, 246, 341, 7, 32, "Output",ExpressionUUID->"fccf1189-329e-4dd3-aa60-4dea33a4c302"]
+}, Open  ]],
+Cell[8931, 256, 747, 12, 78, "Text",ExpressionUUID->"17f420f8-8684-48f9-8a02-86293eccb6e4"],
+Cell[9681, 270, 529, 12, 48, "Input",ExpressionUUID->"fbe8f7de-594d-40fd-8d95-edd384f1ed06"],
+Cell[10213, 284, 562, 12, 48, "Input",ExpressionUUID->"90f501d8-6122-49f5-a504-2591c75c51ed"],
+Cell[10778, 298, 750, 17, 56, "Text",ExpressionUUID->"68e3d22d-7905-4b79-8348-f303e017bbc4"],
+Cell[CellGroupData[{
+Cell[11553, 319, 364, 6, 48, "Input",ExpressionUUID->"6cce459a-eede-4dbd-bcdd-4c25eeec4391"],
+Cell[11920, 327, 343, 5, 32, "Output",ExpressionUUID->"53cc86dd-71d9-4572-abb1-d5ca535b7ac3"],
+Cell[12266, 334, 343, 5, 32, "Output",ExpressionUUID->"775db947-bd5b-4428-a2be-4ae12552c5eb"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12658, 345, 236, 4, 67, "Section",ExpressionUUID->"22ab2e24-98d5-4f25-b921-1313e2f4333e"],
+Cell[12897, 351, 4297, 105, 126, "Text",ExpressionUUID->"58b267a6-ccd1-49d4-87b7-55d13ce5d292"],
+Cell[17197, 458, 4088, 119, 105, "Input",ExpressionUUID->"bac52e1e-d8c7-47de-9add-67abe96d2357"],
+Cell[21288, 579, 1422, 35, 56, "Text",ExpressionUUID->"04499ce0-952a-45e8-af1e-7369481d70bf"],
+Cell[CellGroupData[{
+Cell[22735, 618, 584, 13, 28, "Input",ExpressionUUID->"7832a60c-35da-4c2e-94c1-4df224eeb46f"],
+Cell[23322, 633, 368, 9, 32, "Output",ExpressionUUID->"ebb02409-e4da-434e-a87d-3706639246c8"]
+}, Open  ]],
+Cell[23705, 645, 1524, 36, 78, "Text",ExpressionUUID->"567350b3-0ab2-4ea1-a512-5ff10a862d33"],
+Cell[25232, 683, 1899, 46, 48, "Input",ExpressionUUID->"76c7e5ff-3640-4933-af15-86c9d0d7153e"],
+Cell[CellGroupData[{
+Cell[27156, 733, 205, 3, 28, "Input",ExpressionUUID->"b8ea9bc4-bbff-494e-bd5e-a1058f485544"],
+Cell[27364, 738, 457, 7, 32, "Output",ExpressionUUID->"6d9f530d-9310-4fcd-a29d-97f2843241fc"]
+}, Open  ]],
+Cell[27836, 748, 1413, 45, 86, "Input",ExpressionUUID->"ebc4f4e5-50aa-4a54-a620-712dc6b2dd19"],
+Cell[CellGroupData[{
+Cell[29274, 797, 139, 2, 28, "Input",ExpressionUUID->"107bbdbd-4a93-4891-9ebf-aa96661afcca"],
+Cell[29416, 801, 206, 3, 32, "Output",ExpressionUUID->"ab074533-2f04-463c-b32d-43f1b138129f"]
+}, Open  ]],
+Cell[29637, 807, 3254, 96, 103, "Text",ExpressionUUID->"d679d23d-9b9c-4fe0-b794-8b259a83cb38"],
+Cell[32894, 905, 5500, 169, 124, "Input",ExpressionUUID->"e59d7022-ec21-46be-9a79-a5303247d07f"],
+Cell[CellGroupData[{
+Cell[38419, 1078, 538, 13, 28, "Input",ExpressionUUID->"b3325d60-6b3d-4298-b19e-45d768469b65"],
+Cell[38960, 1093, 558, 12, 32, "Output",ExpressionUUID->"81135e2f-224e-4387-a9dd-0716cdb143e4"]
+}, Open  ]],
+Cell[39533, 1108, 1369, 41, 48, "Input",ExpressionUUID->"044161cd-cc64-4072-b7a6-40da49c91dba"],
+Cell[CellGroupData[{
+Cell[40927, 1153, 143, 3, 28, "Input",ExpressionUUID->"dfb32f70-c897-4043-accd-19d2926abe81"],
+Cell[41073, 1158, 261, 5, 32, "Output",ExpressionUUID->"48ad2c01-561f-4904-8b2d-8772605eaadf"]
+}, Open  ]],
+Cell[41349, 1166, 1175, 30, 34, "Text",ExpressionUUID->"b9cab257-2cbf-4d9d-a9e9-5c571e33687f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42561, 1201, 170, 3, 67, "Section",ExpressionUUID->"7322d0ae-3405-4ad5-b105-13479f19ecc4"],
+Cell[42734, 1206, 463, 9, 56, "Text",ExpressionUUID->"acbdc684-5bad-49f5-8ad7-03d7d5c9a8bf"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[43234, 1220, 244, 4, 67, "Section",ExpressionUUID->"0ca31b0c-d679-43ee-9e02-22f2a8773562"],
+Cell[CellGroupData[{
+Cell[43503, 1228, 340, 7, 53, "Subsection",ExpressionUUID->"a02dc934-c877-4300-97ab-2c32ce3cadf6"],
+Cell[43846, 1237, 597, 11, 56, "Text",ExpressionUUID->"09420479-8c6e-43fa-98f4-5a5daed749cb"],
+Cell[44446, 1250, 613, 11, 78, "Text",ExpressionUUID->"b32f0c34-8b46-4614-bc34-8543e06350c6"],
+Cell[45062, 1263, 1283, 32, 143, "Input",ExpressionUUID->"ad385dc2-682c-4354-a16e-7b307dc5b3ef"],
+Cell[46348, 1297, 304, 6, 34, "Text",ExpressionUUID->"a090e347-b737-41d0-acfc-f69d9c245591"],
+Cell[CellGroupData[{
+Cell[46677, 1307, 383, 6, 28, "Input",ExpressionUUID->"28076919-8aef-402a-bfa6-d99c7b3b6f09"],
+Cell[47063, 1315, 348, 5, 32, "Output",ExpressionUUID->"d60e6637-7548-4d7f-b2d8-d5f954518c79"]
+}, Open  ]],
+Cell[47426, 1323, 261, 6, 34, "Text",ExpressionUUID->"00021a95-7008-45b2-8fa4-14460d91ef14"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47736, 1335, 171, 3, 67, "Section",ExpressionUUID->"ca5966cd-63ec-4c41-8d40-215848b37b47"],
+Cell[47910, 1340, 706, 12, 78, "Text",ExpressionUUID->"f9232635-7ac3-4602-aa41-3c0c2fa1aca7"],
+Cell[48619, 1354, 2647, 71, 105, "Input",ExpressionUUID->"a670442d-6208-4a8c-82c9-e07694555947"],
+Cell[CellGroupData[{
+Cell[51291, 1429, 475, 9, 28, "Input",ExpressionUUID->"68d37f05-f315-4c86-bae1-d1dc5c6692b9"],
+Cell[51769, 1440, 373, 5, 32, "Output",ExpressionUUID->"01fb6896-57d6-4cb9-bae2-1c1a246544a5"]
+}, Open  ]],
+Cell[52157, 1448, 259, 6, 34, "Text",ExpressionUUID->"967c0406-8e31-490c-accc-cac951d6652c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[52453, 1459, 194, 3, 67, "Section",ExpressionUUID->"45f289e0-5b35-47d2-a4ab-3306c81cbbf3"],
+Cell[52650, 1464, 2234, 37, 188, "Text",ExpressionUUID->"3ff8c289-01b8-4b59-977a-54d6bff6119e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[54921, 1506, 172, 3, 67, "Section",ExpressionUUID->"737b02c4-659d-4795-9902-71aaac22accc"],
+Cell[55096, 1511, 1301, 22, 210, "Text",ExpressionUUID->"318f2330-2775-473d-9f6f-b8e40e0889f6"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
